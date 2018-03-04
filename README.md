@@ -1,4 +1,4 @@
-# Pràctica 1
+# Graphic Scripts
 
 Aplicació gràfica que busca rèpliques de tots els arxius locals d’un directori
 font (sense subdirectoris) a un arbre de directoris destís. Els que trobi que coincideixen en el
