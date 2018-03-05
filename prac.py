@@ -5,6 +5,7 @@ from Tkinter import *
 from tkFileDialog import *
 import tkMessageBox 
 import os, sys
+from collections import defaultdict
 
 #Create window
 window=Tk()
@@ -14,10 +15,12 @@ window.minsize(500,300)
 #Variables
 global dir_NameDst
 global dir_NameSrc
+global fit_desti
+global dicc_fitx
 dir_NameDst = StringVar()
 dir_NameSrc = StringVar()
-dic_Igual = {}
-fit_desti= Listbox()
+dicc_fitx = defaultdict(list)
+fit_desti = Listbox()
 
 #Function source preguntar Banús
 def dirNameSrc():
@@ -28,17 +31,20 @@ def dirNameDst():
 	dir_NameDst.set(os.path.abspath(askdirectory()))
 	
 #dsjklfbn
-def same_files(a, dire, files):
-	fit_desti = fit_desti.insert(filter(lambda x: x.endswith('.txt'), os.listdir(path)))
+#def same_files(a, dire, files):
+	
 	#dic_Igual[val] = '~/'+os.path.relpath(, dir_NameDst)
 	
 #Cerca de fitxers semblants
 def dicIgual():
-	fit_font = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameSrc.get()))
-	
-	os.path.walk(dir_NameDst.get(), same_files, None)
-		
-	print fit_desti
+	fit_font = os.listdir(dir_NameSrc.get())
+	for path, dirs, files in os.walk(dir_NameDst.get()):
+		for f in files:
+			fit_desti.insert(END, f)
+			dicc_fitx[f].append(path)
+				
+	print fit_desti.get(0, END)
+	print dicc_fitx
 	#fit_iguals = [val for val in fit_desti if val in fit_font]
 	#print fit_iguals
 	#for val in fit_iguals:
