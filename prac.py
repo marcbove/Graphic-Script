@@ -23,9 +23,6 @@ def dirNameSrc():
 def dirNameDst():
 	dir_NameDst.set(os.path.abspath(askdirectory()))
 
-#Function 	
-def 
-
 
 #GUI's First Line: ask origin directory
 
