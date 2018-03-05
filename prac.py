@@ -17,7 +17,7 @@ global dir_NameSrc
 dir_NameDst = StringVar()
 dir_NameSrc = StringVar()
 dic_Igual = {}
-
+fit_desti= Listbox()
 
 #Function source preguntar Banús
 def dirNameSrc():
@@ -26,12 +26,26 @@ def dirNameSrc():
 #Function dest
 def dirNameDst():
 	dir_NameDst.set(os.path.abspath(askdirectory()))
-
+	
+#dsjklfbn
+def same_files(a, dire, files):
+	fit_desti = fit_desti.insert(filter(lambda x: x.endswith('.txt'), os.listdir(path)))
+	#dic_Igual[val] = '~/'+os.path.relpath(, dir_NameDst)
+	
 #Cerca de fitxers semblants
 def dicIgual():
-	fit_desti = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameDst.get()))
 	fit_font = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameSrc.get()))
 	
+	os.path.walk(dir_NameDst.get(), same_files, None)
+		
+	print fit_desti
+	#fit_iguals = [val for val in fit_desti if val in fit_font]
+	#print fit_iguals
+	#for val in fit_iguals:
+		#'~'+dir_NameDst.get().replace(dir_NameSrc.get(), "")
+		#var = os.path.relpath(dir_NameDst)
+		#dic_Igual[val] = '~/'+os.path.relpath(, dir_NameDst)
+	#print dic_Igual
 
 #GUI's First Line: ask origin directory
 
