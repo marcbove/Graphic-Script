@@ -4,7 +4,7 @@
 from Tkinter import *
 from tkFileDialog import *
 import tkMessageBox 
-import os
+import os, sys
 
 #Create window
 window=Tk()
@@ -12,8 +12,12 @@ window.title("Cerca fitxers Redundants")
 window.minsize(500,300)
 
 #Variables
+global dir_NameDst
+global dir_NameSrc
 dir_NameDst = StringVar()
 dir_NameSrc = StringVar()
+dic_Igual = {}
+
 
 #Function source preguntar Banús
 def dirNameSrc():
@@ -23,6 +27,11 @@ def dirNameSrc():
 def dirNameDst():
 	dir_NameDst.set(os.path.abspath(askdirectory()))
 
+#Cerca de fitxers semblants
+def dicIgual():
+	fit_desti = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameDst.get()))
+	fit_font = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameSrc.get()))
+	
 
 #GUI's First Line: ask origin directory
 
@@ -38,7 +47,7 @@ lDirectFont.pack(side = LEFT, expand = TRUE, fill = X)
 fDirectDest = Frame(window)
 bDirectDest = Button(fDirectDest, text = 'Escolliu directori destí', command = dirNameDst)
 lDirectDest = Label(fDirectDest, textvariable = dir_NameDst, relief = "sunken")
-bCerca = Button(fDirectDest, text = 'Cerca', command = askdirectory)
+bCerca = Button(fDirectDest, text = 'Cerca', command = dicIgual)
 
 bDirectDest.pack(side = LEFT)
 lDirectDest.pack(side = LEFT, expand = TRUE, fill = X)
