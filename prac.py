@@ -37,7 +37,6 @@ def omplirDicc(fit_font):
 			#fit_desti.insert(END, f)
 			if f.endswith('txt'):
 				for fi in fit_font:
-					print fi, f
 					if fi == f and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path:
 						dicc_fitx_ig[f].append(path)
 					elif fi == f and dir_NameSrc.get()!=path:
@@ -66,17 +65,51 @@ def dicIgual():
 		tkMessageBox.showerror("Error", "Introduzca directorios")
 		
 
-
+#Función que selecciona todos los ficheros originales de la lista
 def seleccionar_tots_or():
-	lista_or.selection_set(0, END)
+	if not dir_NameDst.get() or not dir_NameSrc.get():
+		tkMessageBox.showwarning("Warning", "Introduzca directorios")
+	else:
+		lista_or.selection_set(0, END)
 	
 
+#Función que selecciona todos los ficheros iguales de la lista
 def seleccionar_tots_ig():
-	lista_ig.selection_set(0, END)
+	if not dir_NameDst.get() or not dir_NameSrc.get():
+		tkMessageBox.showwarning("Warning", "Introduzca directorios")
+	else:
+		lista_ig.selection_set(0, END)
 
+
+#Función que selecciona todos los ficheros semblants de la lista
 def seleccionar_tots_semb():
-	lista_semb.selection_set(0, END)
+	if not dir_NameDst.get() or not dir_NameSrc.get():
+		tkMessageBox.showwarning("Warning", "Introduzca directorios")
+	else:
+		lista_semb.selection_set(0, END)
 
+#Función que deselecciona todos los ficheros originales de la lista
+def deseleccionar_tots_or():
+	if not dir_NameDst.get() or not dir_NameSrc.get():
+		tkMessageBox.showwarning("Warning", "Introduzca directorios")
+	else:
+		lista_or.selection_clear(0, END)
+
+#Función que deselecciona todos los ficheros iguales de la lista
+def deseleccionar_tots_ig():
+	if not dir_NameDst.get() or not dir_NameSrc.get():
+		tkMessageBox.showwarning("Warning", "Introduzca directorios")
+	else:
+		lista_ig.selection_clear(0, END)
+
+#Función que deselecciona todos los ficheros semblants de la lista
+def deseleccionar_tots_semb():
+	if not dir_NameDst.get() or not dir_NameSrc.get():
+		tkMessageBox.showwarning("Warning", "Introduzca directorios")
+	else:
+		lista_semb.selection_clear(0, END)
+
+#Función compara
 
 
 #GUI's First Line: ask origin directory
@@ -103,7 +136,7 @@ scrolOriginal.config(command = lista_or.yview)
 #GUI's second-to-last: selecciona tots/cap
 fSelecciona = Frame(window)
 bTots = Button(fSelecciona, text = 'Selecciona Tots', command = seleccionar_tots_or)
-bCap = Button(fSelecciona, text = 'Selecciona Cap', command = window.quit)
+bCap = Button(fSelecciona, text = 'Selecciona Cap', command = deseleccionar_tots_or)
 
 
 
@@ -161,7 +194,7 @@ bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = window.quit)
 bHLink = Button(fFitxIgualButton, text = 'Hard Link', command = window.quit)
 bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = window.quit)
 bSelecTotsA = Button(fFitxIgualButton, text = 'Selec Tots', command = seleccionar_tots_ig)
-bSelecCapA = Button(fFitxIgualButton, text = 'Selec Cap', command = window.quit)
+bSelecCapA = Button(fFitxIgualButton, text = 'Selec Cap', command = deseleccionar_tots_ig)
 
 bEsborra.pack(side = TOP, anchor = W)				
 bHLink.pack(side = TOP, anchor = W)				
@@ -193,7 +226,7 @@ bCompara = Button(fFitxSemblButton, text = 'Compara', command = window.quit)
 bRenombra = Button(fFitxSemblButton, text = 'Renombra', command = window.quit)
 bEsborra = Button(fFitxSemblButton, text = 'Esborra', command = window.quit)
 bSelecTotsB = Button(fFitxSemblButton, text = 'Selec Tots', command = seleccionar_tots_semb)
-bSelecCapB = Button(fFitxSemblButton, text = 'Selec Cap', command = window.quit)
+bSelecCapB = Button(fFitxSemblButton, text = 'Selec Cap', command = deseleccionar_tots_semb)
 
 bCompara.pack(side = TOP, anchor = W)
 bRenombra.pack(side = TOP, anchor = W)
