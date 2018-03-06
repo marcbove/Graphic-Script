@@ -34,6 +34,7 @@ def dirNameSrc():
 #Function dest
 def dirNameDst():
 	dir_NameDst.set(os.path.abspath(askdirectory()))
+
 	
 #dsjklfbn
 #def same_files(a, dire, files):
@@ -61,7 +62,7 @@ def dicIgual():
 	for var in fit_or:
 		lista_or.insert(END, var)
 	lista_or.get(0, END)
-	
+
 
 #GUI's First Line: ask origin directory
 
