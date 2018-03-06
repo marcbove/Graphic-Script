@@ -110,7 +110,48 @@ def deseleccionar_tots_semb():
 		lista_semb.selection_clear(0, END)
 
 #Función compara
+def compara():
+	ventanacomparacion = Toplevel()
+	ventanacomparacion.minsize(500,200)
+	ventanacomparacion.maxsize(500,200)
 
+	fcomp = Frame(ventanacomparacion)
+	finode = Frame(fcomp)
+	fpath = Frame(fcomp)
+	fnum = Frame(fcomp)
+
+	linode = Label(finode, text = 'Inode:')
+	lpath = Label(fpath, text = 'Path:')
+	lnum = Label(fnum, text ='Num. Lín. Dif')
+
+	scrolInode = Scrollbar(finode, orient = VERTICAL)
+	scrolpath = Scrollbar(fpath, orient = VERTICAL)
+	scrolnum = Scrollbar(fnum, orient = VERTICAL)
+
+	lista_inode = Listbox(finode, yscrollcommand = scrolInode.set)
+	lista_path = Listbox(fpath, yscrollcommand = scrolpath.set)
+	lista_num = Listbox(fnum, yscrollcommand = scrolnum.set)
+
+	scrolInode.config(command = lista_or.yview)
+	scrolpath.config(command = lista_or.yview)
+	scrolnum.config(command = lista_or.yview)
+
+	linode.pack(side = TOP)
+	lista_inode.pack(side = LEFT, expand = TRUE, fill = BOTH)
+	scrolInode.pack(side = LEFT, fill = Y)
+
+	lpath.pack(side = TOP)
+	lista_path.pack(side = LEFT, expand = TRUE, fill = BOTH)
+	scrolpath.pack(side = LEFT, fill = Y)
+
+	lnum.pack(side = TOP)
+	lista_num.pack(side = LEFT, expand = TRUE, fill = BOTH)
+	scrolnum.pack(side = LEFT, fill = Y)
+
+	finode.pack(side = LEFT, expand = TRUE, fill = BOTH)
+	fpath.pack(side = LEFT, expand = TRUE, fill = BOTH)
+	fnum.pack(side = LEFT, expand = TRUE, fill = BOTH)
+	fcomp.pack(side = LEFT, expand = TRUE, fill = BOTH)
 
 #GUI's First Line: ask origin directory
 
@@ -222,7 +263,7 @@ lista_semb.pack(side = RIGHT, expand = TRUE, fill = X)
 			
 #GUI's buttons for 'Fitxers Semblants'
 fFitxSemblButton = Frame(fSembl)
-bCompara = Button(fFitxSemblButton, text = 'Compara', command = window.quit)
+bCompara = Button(fFitxSemblButton, text = 'Compara', command = compara)
 bRenombra = Button(fFitxSemblButton, text = 'Renombra', command = window.quit)
 bEsborra = Button(fFitxSemblButton, text = 'Esborra', command = window.quit)
 bSelecTotsB = Button(fFitxSemblButton, text = 'Selec Tots', command = seleccionar_tots_semb)
