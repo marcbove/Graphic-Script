@@ -29,32 +29,35 @@ def dirNameSrc():
 def dirNameDst():
 	dir_NameDst.set(os.path.abspath(askdirectory()))
 
-	
+#Function 
+def omplirDicc(fit_font):
+	for path, dirs, files in os.walk(dir_NameDst.get()):
+		for f in files:
+			#fit_desti.insert(END, f)
+			for fi in fit_font:
+				if filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path:
+					dicc_fitx_ig[f].append(path)
+				elif fi == f and dir_NameSrc.get()!=path:
+					dicc_fitx_semb[f].append(path)
+
+
 #Cerca de fitxers semblants
 def dicIgual():
 	try:
-
 		fit_font = os.listdir(dir_NameSrc.get())
 		asd = os.listdir(dir_NameDst.get())
-		for path, dirs, files in os.walk(dir_NameDst.get()):
-			for f in files:
-				#fit_desti.insert(END, f)
-				for fi in fit_font:
-					if filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path:
-						dicc_fitx_ig[f].append(path)
-					elif fi==f and dir_NameSrc.get()!=path:
-						dicc_fitx_semb[f].append(path)
-	
-		print 'Iguals:', dicc_fitx_ig
-		print 'Semblants:', dicc_fitx_semb
-
+		omplirDicc(fit_font)
 		fit_or = filter(lambda fil: fil in dicc_fitx_ig.keys() and fil in dicc_fitx_semb.keys(), fit_font)
 		for var in fit_or:
 			lista_or.insert(END, var)
 
-		
+		for key, val in dicc_fitx_ig.iteritems():
+			lista_ig.insert(END, '~/'+os.path.relpath(val[0], dir_NameSrc.get())+'/'+key)
 
-	except Exception, e:
+		for key, val in dicc_fitx_semb.iteritems():
+			lista_semb.insert(END, '~/'+os.path.relpath(val[0], dir_NameSrc.get())+'/'+key)
+
+	except IOError, e:
 		tkMessageBox.showerror("Error", "Introduzca directorios")
 		
 
