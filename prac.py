@@ -14,20 +14,14 @@ window.title("Cerca fitxers Redundants")
 window.minsize(500,300)
 
 #Variables
-global dir_NameDst
-global dir_NameSrc
-global fit_desti, fit_font
-global dicc_fitx_ig
-global dicc_fitx_semb
+
 dir_NameDst = StringVar()
 dir_NameSrc = StringVar()
 dicc_fitx_ig = defaultdict(list)
 dicc_fitx_semb = defaultdict(list)
 fit_desti = Listbox()
-fit_font = ()
-fit_or = []
 
-#Function source preguntar Banús
+#Function source
 def dirNameSrc():
 	dir_NameSrc.set(os.path.abspath(askdirectory()))
 
@@ -36,32 +30,35 @@ def dirNameDst():
 	dir_NameDst.set(os.path.abspath(askdirectory()))
 
 	
-#dsjklfbn
-#def same_files(a, dire, files):
-	
-	#dic_Igual[val] = '~/'+os.path.relpath(, dir_NameDst)
-	
 #Cerca de fitxers semblants
 def dicIgual():
-	fit_font = os.listdir(dir_NameSrc.get())
-	for path, dirs, files in os.walk(dir_NameDst.get()):
-		for f in files:
-			#fit_desti.insert(END, f)
-			for fi in fit_font:
-				if filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path:
-					dicc_fitx_ig[f].append(path)
-				elif fi==f and dir_NameSrc.get()!=path:
-					dicc_fitx_semb[f].append(path)
-	#print fit_desti.get(0, END)
-	print 'Iguals:', dicc_fitx_ig
-	print 'Semblants:', dicc_fitx_semb
-	for file in fit_font:
-		if file in dicc_fitx_ig.keys() and file in dicc_fitx_semb.keys():
-			fit_or.append(file)
-	#fit_font = filter(lambda x: fit_font.remove(x) if (x not in dicc_fitx_ig.keys() and x not in dicc_fitx_semb.keys()), fit_font)
-	for var in fit_or:
-		lista_or.insert(END, var)
-	lista_or.get(0, END)
+	try:
+
+		fit_font = os.listdir(dir_NameSrc.get())
+		asd = os.listdir(dir_NameDst.get())
+		for path, dirs, files in os.walk(dir_NameDst.get()):
+			for f in files:
+				#fit_desti.insert(END, f)
+				for fi in fit_font:
+					if filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path:
+						dicc_fitx_ig[f].append(path)
+					elif fi==f and dir_NameSrc.get()!=path:
+						dicc_fitx_semb[f].append(path)
+	
+		print 'Iguals:', dicc_fitx_ig
+		print 'Semblants:', dicc_fitx_semb
+
+		fit_or = filter(lambda fil: fil in dicc_fitx_ig.keys() and fil in dicc_fitx_semb.keys(), fit_font)
+		for var in fit_or:
+			lista_or.insert(END, var)
+
+		
+
+	except Exception, e:
+		tkMessageBox.showerror("Error", "Introduzca directorios")
+		
+
+
 
 
 #GUI's First Line: ask origin directory
