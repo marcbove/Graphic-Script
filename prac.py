@@ -34,125 +34,145 @@ def dirNameDst():
 def omplirDicc(fit_font):
 	for path, dirs, files in os.walk(dir_NameDst.get()):
 		for f in files:
-			#fit_desti.insert(END, f)
 			if f.endswith('txt'):
 				for fi in fit_font:
 					if fi == f and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path:
+						print 'ig:', f
 						dicc_fitx_ig[f].append(path)
 					elif fi == f and dir_NameSrc.get()!=path:
+						print 'semb:', f
 						dicc_fitx_semb[f].append(path)
-
+	print dicc_fitx_semb
+	print dicc_fitx_ig
 
 #Cerca de fitxers semblants
 def dicIgual():
 	try:
 		fit_font = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameSrc.get()))
 		asd = os.listdir(dir_NameDst.get())
+		print asd
 		omplirDicc(fit_font)
-		fit_or = filter(lambda fil: fil in dicc_fitx_ig.keys() and fil in dicc_fitx_semb.keys(), fit_font)
+		print fit_font
+		fit_or = filter(lambda fil: fil in dicc_fitx_ig.keys() or fil in dicc_fitx_semb.keys(), fit_font)
+		print fit_or
+
 		for var in fit_or:
+			print var
 			lista_or.insert(END, var)
 
 		for key, val in dicc_fitx_ig.iteritems():
 			for i in val:
+				print '~/'+os.path.relpath(i, dir_NameSrc.get())+'/'+key
 				lista_ig.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get())+'/'+key)
 
 		for key, val in dicc_fitx_semb.iteritems():
 			for i in val:
 				lista_semb.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get())+'/'+key)
 
-	except IOError, e:
+	except OSError, e:
 		tkMessageBox.showerror("Error", "Introduzca directorios")
 		
 
 #Función que selecciona todos los ficheros originales de la lista
 def seleccionar_tots_or():
-	if not dir_NameDst.get() or not dir_NameSrc.get():
-		tkMessageBox.showwarning("Warning", "Introduzca directorios")
+	if not lista_or.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista de ficheros originales")
 	else:
 		lista_or.selection_set(0, END)
 	
 
 #Función que selecciona todos los ficheros iguales de la lista
 def seleccionar_tots_ig():
-	if not dir_NameDst.get() or not dir_NameSrc.get():
-		tkMessageBox.showwarning("Warning", "Introduzca directorios")
+	if not lista_ig.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista de ficheros iguales")
 	else:
 		lista_ig.selection_set(0, END)
 
 
 #Función que selecciona todos los ficheros semblants de la lista
 def seleccionar_tots_semb():
-	if not dir_NameDst.get() or not dir_NameSrc.get():
-		tkMessageBox.showwarning("Warning", "Introduzca directorios")
+	if not lista_semb.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista de ficheros parecidos")
 	else:
 		lista_semb.selection_set(0, END)
 
 #Función que deselecciona todos los ficheros originales de la lista
 def deseleccionar_tots_or():
-	if not dir_NameDst.get() or not dir_NameSrc.get():
-		tkMessageBox.showwarning("Warning", "Introduzca directorios")
+	if not lista_or.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista de ficheros originales")
 	else:
 		lista_or.selection_clear(0, END)
 
 #Función que deselecciona todos los ficheros iguales de la lista
 def deseleccionar_tots_ig():
-	if not dir_NameDst.get() or not dir_NameSrc.get():
-		tkMessageBox.showwarning("Warning", "Introduzca directorios")
+	if not lista_ig.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista de ficheros iguales")
 	else:
 		lista_ig.selection_clear(0, END)
 
 #Función que deselecciona todos los ficheros semblants de la lista
 def deseleccionar_tots_semb():
-	if not dir_NameDst.get() or not dir_NameSrc.get():
-		tkMessageBox.showwarning("Warning", "Introduzca directorios")
+	if not lista_semb.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista de ficheros parecidos")
 	else:
 		lista_semb.selection_clear(0, END)
 
-#Función compara
-def compara():
-	ventanacomparacion = Toplevel()
-	ventanacomparacion.minsize(500,200)
-	ventanacomparacion.maxsize(500,200)
+#Función crea GUI compara
+def compara_graf():
+	if not lista_semb.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros parecidos")
+	else:
+		ventanacomparacion = Toplevel()
+		ventanacomparacion.minsize(500,200)
+		ventanacomparacion.maxsize(500,200)
 
-	fcomp = Frame(ventanacomparacion)
-	finode = Frame(fcomp)
-	fpath = Frame(fcomp)
-	fnum = Frame(fcomp)
+		fcomp = Frame(ventanacomparacion)
+		finode = Frame(fcomp)
+		fpath = Frame(fcomp)
+		fnum = Frame(fcomp)
 
-	linode = Label(finode, text = 'Inode:')
-	lpath = Label(fpath, text = 'Path:')
-	lnum = Label(fnum, text ='Num. Lín. Dif')
+		linode = Label(finode, text = 'Inode:')
+		lpath = Label(fpath, text = 'Path:')
+		lnum = Label(fnum, text ='Num. Lín. Dif')
 
-	scrolInode = Scrollbar(finode, orient = VERTICAL)
-	scrolpath = Scrollbar(fpath, orient = VERTICAL)
-	scrolnum = Scrollbar(fnum, orient = VERTICAL)
+		scrolInode = Scrollbar(finode, orient = VERTICAL)
+		scrolpath = Scrollbar(fpath, orient = VERTICAL)
+		scrolnum = Scrollbar(fnum, orient = VERTICAL)
 
-	lista_inode = Listbox(finode, yscrollcommand = scrolInode.set)
-	lista_path = Listbox(fpath, yscrollcommand = scrolpath.set)
-	lista_num = Listbox(fnum, yscrollcommand = scrolnum.set)
+		lista_inode = Listbox(finode, yscrollcommand = scrolInode.set)
+		lista_path = Listbox(fpath, yscrollcommand = scrolpath.set)
+		lista_num = Listbox(fnum, yscrollcommand = scrolnum.set)
 
-	scrolInode.config(command = lista_or.yview)
-	scrolpath.config(command = lista_or.yview)
-	scrolnum.config(command = lista_or.yview)
+		scrolInode.config(command = lista_inode.yview)
+		scrolpath.config(command = lista_path.yview)
+		scrolnum.config(command = lista_num.yview)
 
-	linode.pack(side = TOP)
-	lista_inode.pack(side = LEFT, expand = TRUE, fill = BOTH)
-	scrolInode.pack(side = LEFT, fill = Y)
+		linode.pack(side = TOP)
+		lista_inode.pack(side = LEFT, expand = TRUE, fill = BOTH)
+		scrolInode.pack(side = LEFT, fill = Y)
 
-	lpath.pack(side = TOP)
-	lista_path.pack(side = LEFT, expand = TRUE, fill = BOTH)
-	scrolpath.pack(side = LEFT, fill = Y)
+		lpath.pack(side = TOP)
+		lista_path.pack(side = LEFT, expand = TRUE, fill = BOTH)
+		scrolpath.pack(side = LEFT, fill = Y)
 
-	lnum.pack(side = TOP)
-	lista_num.pack(side = LEFT, expand = TRUE, fill = BOTH)
-	scrolnum.pack(side = LEFT, fill = Y)
+		lnum.pack(side = TOP)
+		lista_num.pack(side = LEFT, expand = TRUE, fill = BOTH)
+		scrolnum.pack(side = LEFT, fill = Y)
 
-	finode.pack(side = LEFT, expand = TRUE, fill = BOTH)
-	fpath.pack(side = LEFT, expand = TRUE, fill = BOTH)
-	fnum.pack(side = LEFT, expand = TRUE, fill = BOTH)
-	fcomp.pack(side = LEFT, expand = TRUE, fill = BOTH)
+		finode.pack(side = LEFT, expand = TRUE, fill = BOTH)
+		fpath.pack(side = LEFT, expand = TRUE, fill = BOTH)
+		fnum.pack(side = LEFT, expand = TRUE, fill = BOTH)
+		fcomp.pack(side = LEFT, expand = TRUE, fill = BOTH)
 
+		llena_Listas(lista_inode, lista_path)
+
+
+#Función crea GUI compara
+def llena_Listas(lista_inode, lista_path):
+	for val in lista_semb.curselection():
+		lista_inode.insert(END, os.stat(os.path.abspath(lista_semb.get(val).replace('~/', ''))).st_ino) 
+		lista_path.insert(END, lista_semb.get(val).replace('~/', ''))
+	
 #GUI's First Line: ask origin directory
 
 fDirectFont = Frame(window)
@@ -263,7 +283,7 @@ lista_semb.pack(side = RIGHT, expand = TRUE, fill = X)
 			
 #GUI's buttons for 'Fitxers Semblants'
 fFitxSemblButton = Frame(fSembl)
-bCompara = Button(fFitxSemblButton, text = 'Compara', command = compara)
+bCompara = Button(fFitxSemblButton, text = 'Compara', command = compara_graf)
 bRenombra = Button(fFitxSemblButton, text = 'Renombra', command = window.quit)
 bEsborra = Button(fFitxSemblButton, text = 'Esborra', command = window.quit)
 bSelecTotsB = Button(fFitxSemblButton, text = 'Selec Tots', command = seleccionar_tots_semb)
