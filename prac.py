@@ -11,10 +11,11 @@ import filecmp
 #Create window
 window=Tk()
 window.title("Cerca fitxers Redundants")
-window.minsize(500,300)
+window.minsize(500,450)
+window.maxsize(500,450)
 
 #Variables
-
+global lista_or, lista_ig, lista_semb
 dir_NameDst = StringVar()
 dir_NameSrc = StringVar()
 dicc_fitx_ig = defaultdict(list)
@@ -34,17 +35,19 @@ def omplirDicc(fit_font):
 	for path, dirs, files in os.walk(dir_NameDst.get()):
 		for f in files:
 			#fit_desti.insert(END, f)
-			for fi in fit_font:
-				if filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path:
-					dicc_fitx_ig[f].append(path)
-				elif fi == f and dir_NameSrc.get()!=path:
-					dicc_fitx_semb[f].append(path)
+			if f.endswith('txt'):
+				for fi in fit_font:
+					print fi, f
+					if fi == f and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path:
+						dicc_fitx_ig[f].append(path)
+					elif fi == f and dir_NameSrc.get()!=path:
+						dicc_fitx_semb[f].append(path)
 
 
 #Cerca de fitxers semblants
 def dicIgual():
 	try:
-		fit_font = os.listdir(dir_NameSrc.get())
+		fit_font = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameSrc.get()))
 		asd = os.listdir(dir_NameDst.get())
 		omplirDicc(fit_font)
 		fit_or = filter(lambda fil: fil in dicc_fitx_ig.keys() and fil in dicc_fitx_semb.keys(), fit_font)
@@ -52,20 +55,29 @@ def dicIgual():
 			lista_or.insert(END, var)
 
 		for key, val in dicc_fitx_ig.iteritems():
-			lista_ig.insert(END, '~/'+os.path.relpath(val[0], dir_NameSrc.get())+'/'+key)
+			for i in val:
+				lista_ig.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get())+'/'+key)
 
 		for key, val in dicc_fitx_semb.iteritems():
-			lista_semb.insert(END, '~/'+os.path.relpath(val[0], dir_NameSrc.get())+'/'+key)
+			for i in val:
+				lista_semb.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get())+'/'+key)
 
 	except IOError, e:
 		tkMessageBox.showerror("Error", "Introduzca directorios")
 		
 
 
-def seleccionar_tots(lista):
-	for num in range(0, lista.size()):
-		print lista.size(), num, lista
-		lista.activate(num)
+def seleccionar_tots_or():
+	lista_or.selection_set(0, END)
+	
+
+def seleccionar_tots_ig():
+	lista_ig.selection_set(0, END)
+
+def seleccionar_tots_semb():
+	lista_semb.selection_set(0, END)
+
+
 
 #GUI's First Line: ask origin directory
 
@@ -75,23 +87,6 @@ lDirectFont = Label(fDirectFont, textvariable = dir_NameSrc, relief = "sunken")
 
 bDirectFont.pack(side = LEFT)
 lDirectFont.pack(side = LEFT, expand = TRUE, fill = X)
-
-
-#GUI's Second Line: ask destination directory and search
-fDirectDest = Frame(window)
-bDirectDest = Button(fDirectDest, text = 'Escolliu directori destí', command = dirNameDst)
-lDirectDest = Label(fDirectDest, textvariable = dir_NameDst, relief = "sunken")
-bCerca = Button(fDirectDest, text = 'Cerca', command = dicIgual)
-
-bDirectDest.pack(side = LEFT)
-lDirectDest.pack(side = LEFT, expand = TRUE, fill = X)
-bCerca.pack(side = LEFT)
-
-#GUI's last line: exit button
-fSortir = Frame(window)
-bSortir = Button(fSortir, text = 'Sortir', command = window.quit)
-
-bSortir.pack(side = LEFT)
 
 
 #Frame for GUI's scrollboxes
@@ -107,8 +102,30 @@ scrolOriginal.config(command = lista_or.yview)
 
 #GUI's second-to-last: selecciona tots/cap
 fSelecciona = Frame(window)
-bTots = Button(fSelecciona, text = 'Selecciona Tots', command = seleccionar_tots(lista_or))
+bTots = Button(fSelecciona, text = 'Selecciona Tots', command = seleccionar_tots_or)
 bCap = Button(fSelecciona, text = 'Selecciona Cap', command = window.quit)
+
+
+
+#GUI's Second Line: ask destination directory and search
+fDirectDest = Frame(window)
+bDirectDest = Button(fDirectDest, text = 'Escolliu directori destí', command = dirNameDst)
+lDirectDest = Label(fDirectDest, textvariable = dir_NameDst, relief = "sunken")
+bCerca = Button(fDirectDest, text = 'Cerca', command = dicIgual)
+
+
+
+bDirectDest.pack(side = LEFT)
+lDirectDest.pack(side = LEFT, expand = TRUE, fill = X)
+bCerca.pack(side = LEFT)
+
+#GUI's last line: exit button
+fSortir = Frame(window)
+bSortir = Button(fSortir, text = 'Sortir', command = window.quit)
+
+bSortir.pack(side = LEFT)
+
+
 
 bTots.pack(side = LEFT)
 bCap.pack(side = LEFT)
@@ -143,7 +160,7 @@ fFitxIgualButton = Frame(fIguals)
 bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = window.quit)
 bHLink = Button(fFitxIgualButton, text = 'Hard Link', command = window.quit)
 bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = window.quit)
-bSelecTotsA = Button(fFitxIgualButton, text = 'Selec Tots', command = window.quit)
+bSelecTotsA = Button(fFitxIgualButton, text = 'Selec Tots', command = seleccionar_tots_ig)
 bSelecCapA = Button(fFitxIgualButton, text = 'Selec Cap', command = window.quit)
 
 bEsborra.pack(side = TOP, anchor = W)				
@@ -175,7 +192,7 @@ fFitxSemblButton = Frame(fSembl)
 bCompara = Button(fFitxSemblButton, text = 'Compara', command = window.quit)
 bRenombra = Button(fFitxSemblButton, text = 'Renombra', command = window.quit)
 bEsborra = Button(fFitxSemblButton, text = 'Esborra', command = window.quit)
-bSelecTotsB = Button(fFitxSemblButton, text = 'Selec Tots', command = window.quit)
+bSelecTotsB = Button(fFitxSemblButton, text = 'Selec Tots', command = seleccionar_tots_semb)
 bSelecCapB = Button(fFitxSemblButton, text = 'Selec Cap', command = window.quit)
 
 bCompara.pack(side = TOP, anchor = W)
