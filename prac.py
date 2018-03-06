@@ -62,7 +62,10 @@ def dicIgual():
 		
 
 
-
+def seleccionar_tots(lista):
+	for num in range(0, lista.size()):
+		print lista.size(), num, lista
+		lista.activate(num)
 
 #GUI's First Line: ask origin directory
 
@@ -90,13 +93,6 @@ bSortir = Button(fSortir, text = 'Sortir', command = window.quit)
 
 bSortir.pack(side = LEFT)
 
-#GUI's second-to-last: selecciona tots/cap
-fSelecciona = Frame(window)
-bTots = Button(fSelecciona, text = 'Selecciona Tots', command = window.quit)
-bCap = Button(fSelecciona, text = 'Selecciona Cap', command = window.quit)
-
-bTots.pack(side = LEFT)
-bCap.pack(side = LEFT)
 
 #Frame for GUI's scrollboxes
 fFitxers = Frame(window)
@@ -107,6 +103,17 @@ lOriginals = Label(fOriginals, text = 'Fitxers Originals:')
 scrolOriginal = Scrollbar(fOriginals, orient = VERTICAL)
 lista_or = Listbox(fOriginals, yscrollcommand = scrolOriginal.set)
 scrolOriginal.config(command = lista_or.yview)
+
+
+#GUI's second-to-last: selecciona tots/cap
+fSelecciona = Frame(window)
+bTots = Button(fSelecciona, text = 'Selecciona Tots', command = seleccionar_tots(lista_or))
+bCap = Button(fSelecciona, text = 'Selecciona Cap', command = window.quit)
+
+bTots.pack(side = LEFT)
+bCap.pack(side = LEFT)
+
+
 
 lOriginals.pack(side = TOP, anchor = W)
 scrolOriginal.pack(side = RIGHT, fill = Y)
