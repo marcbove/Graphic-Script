@@ -4,7 +4,9 @@
 from Tkinter import *
 from tkFileDialog import *
 import tkMessageBox 
-import os
+import os, sys
+from collections import defaultdict
+import filecmp
 
 #Create window
 window=Tk()
@@ -12,8 +14,18 @@ window.title("Cerca fitxers Redundants")
 window.minsize(500,300)
 
 #Variables
+global dir_NameDst
+global dir_NameSrc
+global fit_desti, fit_font
+global dicc_fitx_ig
+global dicc_fitx_semb
 dir_NameDst = StringVar()
 dir_NameSrc = StringVar()
+dicc_fitx_ig = defaultdict(list)
+dicc_fitx_semb = defaultdict(list)
+fit_desti = Listbox()
+fit_font = ()
+fit_or = []
 
 #Function source preguntar Banús
 def dirNameSrc():
@@ -23,6 +35,33 @@ def dirNameSrc():
 def dirNameDst():
 	dir_NameDst.set(os.path.abspath(askdirectory()))
 
+	
+#dsjklfbn
+#def same_files(a, dire, files):
+	
+	#dic_Igual[val] = '~/'+os.path.relpath(, dir_NameDst)
+	
+#Cerca de fitxers semblants
+def dicIgual():
+	fit_font = os.listdir(dir_NameSrc.get())
+	for path, dirs, files in os.walk(dir_NameDst.get()):
+		for f in files:
+			#fit_desti.insert(END, f)
+			for fi in fit_font:
+				if filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path:
+					dicc_fitx_ig[f].append(path)
+				elif fi==f and dir_NameSrc.get()!=path:
+					dicc_fitx_semb[f].append(path)
+	#print fit_desti.get(0, END)
+	print 'Iguals:', dicc_fitx_ig
+	print 'Semblants:', dicc_fitx_semb
+	for file in fit_font:
+		if file in dicc_fitx_ig.keys() and file in dicc_fitx_semb.keys():
+			fit_or.append(file)
+	#fit_font = filter(lambda x: fit_font.remove(x) if (x not in dicc_fitx_ig.keys() and x not in dicc_fitx_semb.keys()), fit_font)
+	for var in fit_or:
+		lista_or.insert(END, var)
+	lista_or.get(0, END)
 
 
 #GUI's First Line: ask origin directory
@@ -39,7 +78,7 @@ lDirectFont.pack(side = LEFT, expand = TRUE, fill = X)
 fDirectDest = Frame(window)
 bDirectDest = Button(fDirectDest, text = 'Escolliu directori destí', command = dirNameDst)
 lDirectDest = Label(fDirectDest, textvariable = dir_NameDst, relief = "sunken")
-bCerca = Button(fDirectDest, text = 'Cerca', command = askdirectory)
+bCerca = Button(fDirectDest, text = 'Cerca', command = dicIgual)
 
 bDirectDest.pack(side = LEFT)
 lDirectDest.pack(side = LEFT, expand = TRUE, fill = X)
@@ -66,12 +105,13 @@ fFitxers = Frame(window)
 fOriginals = Frame(fFitxers)
 lOriginals = Label(fOriginals, text = 'Fitxers Originals:')
 scrolOriginal = Scrollbar(fOriginals, orient = VERTICAL)
-list = Listbox(fOriginals, yscrollcommand = scrolOriginal.set)
-scrolOriginal.config(command = list.yview)
+lista_or = Listbox(fOriginals, yscrollcommand = scrolOriginal.set)
+scrolOriginal.config(command = lista_or.yview)
 
 lOriginals.pack(side = TOP, anchor = W)
 scrolOriginal.pack(side = RIGHT, fill = Y)
-list.pack(side = LEFT, expand = TRUE, fill = BOTH)
+lista_or.pack(side = LEFT, expand = TRUE, fill = BOTH)
+
 
 #GUI's frame for Iguals i Semblants
 fIgualSembl = Frame(fFitxers)
@@ -85,11 +125,11 @@ lIguals.pack(side = TOP, anchor = W)
 #Iguals' Scrollbox
 fIgualScroll = Frame(fIguals)
 scrollIguals = Scrollbar(fIgualScroll, orient = VERTICAL)
-list = Listbox(fIgualScroll, yscrollcommand = scrollIguals.set)
-scrollIguals.config(command = list.yview)
+lista_ig = Listbox(fIgualScroll, yscrollcommand = scrollIguals.set)
+scrollIguals.config(command = lista_ig.yview)
 
 scrollIguals.pack(side = LEFT, fill = Y)
-list.pack(side = RIGHT, expand = TRUE, fill = X)
+lista_ig.pack(side = RIGHT, expand = TRUE, fill = X)
 
 #Iguals' Buttons
 fFitxIgualButton = Frame(fIguals)
@@ -117,11 +157,11 @@ lSembl.pack(side = TOP, anchor = W)
 #Semblants' ScrollBox
 fSemblScroll = Frame(fSembl)
 scrollSembl = Scrollbar(fSemblScroll, orient = VERTICAL)
-list = Listbox(fSemblScroll, yscrollcommand = scrollSembl.set)
-scrollSembl.config(command = list.yview)
+lista_semb = Listbox(fSemblScroll, yscrollcommand = scrollSembl.set)
+scrollSembl.config(command = lista_semb.yview)
 
 scrollSembl.pack(side = LEFT, fill = Y)
-list.pack(side = RIGHT, expand = TRUE, fill = X)
+lista_semb.pack(side = RIGHT, expand = TRUE, fill = X)
 			
 #GUI's buttons for 'Fitxers Semblants'
 fFitxSemblButton = Frame(fSembl)
