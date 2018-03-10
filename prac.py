@@ -7,6 +7,8 @@ import tkMessageBox
 import os, sys
 from collections import defaultdict
 import filecmp
+import subprocess
+
 
 #Create window
 window=Tk()
@@ -163,7 +165,11 @@ def llena_Listas(lista_inode, lista_path):
 	for val in lista_semb.curselection():
 		lista_inode.insert(END, os.stat(os.path.abspath(lista_semb.get(val).replace('~/', ''))).st_ino) 
 		lista_path.insert(END, lista_semb.get(val).replace('~/', ''))
-	
+
+
+#Soft Link
+def asd():
+	#subprocess.Popen(['/bin/usr/bash ', '/bash_script.sh'], )
 #GUI's First Line: ask origin directory
 
 fDirectFont = Frame(window)
@@ -244,7 +250,7 @@ lista_ig.pack(side = RIGHT, expand = TRUE, fill = X)
 fFitxIgualButton = Frame(fIguals)
 bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = window.quit)
 bHLink = Button(fFitxIgualButton, text = 'Hard Link', command = window.quit)
-bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = window.quit)
+bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = asd)
 bSelecTotsA = Button(fFitxIgualButton, text = 'Selec Tots', command = seleccionar_tots_ig)
 bSelecCapA = Button(fFitxIgualButton, text = 'Selec Cap', command = deseleccionar_tots_ig)
 
