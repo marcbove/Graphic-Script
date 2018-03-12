@@ -180,13 +180,12 @@ def listas():
 
 	index=0
 	for i in range(0, len(lista_ig_act_dest)):
-		if i==len(lista_ig_act_dest)/2:
-			break
 		if lista_ig_act_dest[0].startswith('~'):
 			del lista_ig_act_dest[0]
-	print lista_ig_act_dest
-	return lista_ig_act_dest, lista_ig_act_src
+		if i==len(lista_ig_act_dest)/2:
+			break
 
+	return lista_ig_act_dest, lista_ig_act_src
 
 
 #Soft Link
@@ -196,8 +195,8 @@ def soft_link():
 	else: 
 		
 		lista_ig_act_dest, lista_ig_act_src = listas()
-
-		subprocess.call('./softlink.sh')
+		print lista_ig_act_dest
+		p=subprocess.call(['/bin/sh','-c', './softlink.sh ',lista_ig_act_dest, lista_ig_act_src])
 		#subprocess.call('./esborra.sh')
 
 def hard_link():
