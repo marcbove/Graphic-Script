@@ -7,6 +7,8 @@ import tkMessageBox
 import os, sys
 from collections import defaultdict
 import filecmp
+import subprocess
+
 
 #Create window
 window=Tk()
@@ -37,32 +39,23 @@ def omplirDicc(fit_font):
 			if f.endswith('txt'):
 				for fi in fit_font:
 					if fi == f and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path:
-						print 'ig:', f
 						dicc_fitx_ig[f].append(path)
 					elif fi == f and dir_NameSrc.get()!=path:
-						print 'semb:', f
 						dicc_fitx_semb[f].append(path)
-	print dicc_fitx_semb
-	print dicc_fitx_ig
 
 #Cerca de fitxers semblants
 def dicIgual():
 	try:
 		fit_font = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameSrc.get()))
 		asd = os.listdir(dir_NameDst.get())
-		print asd
 		omplirDicc(fit_font)
-		print fit_font
 		fit_or = filter(lambda fil: fil in dicc_fitx_ig.keys() or fil in dicc_fitx_semb.keys(), fit_font)
-		print fit_or
 
 		for var in fit_or:
-			print var
 			lista_or.insert(END, var)
 
 		for key, val in dicc_fitx_ig.iteritems():
 			for i in val:
-				print '~/'+os.path.relpath(i, dir_NameSrc.get())+'/'+key
 				lista_ig.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get())+'/'+key)
 
 		for key, val in dicc_fitx_semb.iteritems():
@@ -172,7 +165,11 @@ def llena_Listas(lista_inode, lista_path):
 	for val in lista_semb.curselection():
 		lista_inode.insert(END, os.stat(os.path.abspath(lista_semb.get(val).replace('~/', ''))).st_ino) 
 		lista_path.insert(END, lista_semb.get(val).replace('~/', ''))
-	
+
+
+#Soft Link
+def asd():
+	#subprocess.Popen(['/bin/usr/bash ', '/bash_script.sh'], )
 #GUI's First Line: ask origin directory
 
 fDirectFont = Frame(window)
@@ -253,7 +250,7 @@ lista_ig.pack(side = RIGHT, expand = TRUE, fill = X)
 fFitxIgualButton = Frame(fIguals)
 bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = window.quit)
 bHLink = Button(fFitxIgualButton, text = 'Hard Link', command = window.quit)
-bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = window.quit)
+bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = asd)
 bSelecTotsA = Button(fFitxIgualButton, text = 'Selec Tots', command = seleccionar_tots_ig)
 bSelecCapA = Button(fFitxIgualButton, text = 'Selec Cap', command = deseleccionar_tots_ig)
 
