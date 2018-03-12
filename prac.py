@@ -168,8 +168,32 @@ def llena_Listas(lista_inode, lista_path):
 
 
 #Soft Link
-def asd():
-	#subprocess.Popen(['/bin/usr/bash ', '/bash_script.sh'], )
+def soft_link():
+	if not lista_ig.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros iguales, la lista está vacía")
+	else: lambda: subprocess.call('./softlink.sh')
+
+def hard_link():
+	if not lista_ig.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros iguales, la lista está vacía")
+	else: lambda: subprocess.call('./hardlink.sh')
+
+
+def esborra_ig():
+	if not lista_ig.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros iguales, la lista está vacía")
+	else: lambda: subprocess.call('./esborraig.sh')
+
+def esborra_semb():
+	if not lista_ig.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros parecidos, la lista está vacía")
+	else: lambda: subprocess.call('./esborrasemb.sh')
+
+def renombra():
+	if not lista_ig.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros parecido, la lista está vacía")
+	else: lambda: subprocess.call('./esborraig.sh')
+
 #GUI's First Line: ask origin directory
 
 fDirectFont = Frame(window)
@@ -248,9 +272,9 @@ lista_ig.pack(side = RIGHT, expand = TRUE, fill = X)
 
 #Iguals' Buttons
 fFitxIgualButton = Frame(fIguals)
-bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = window.quit)
-bHLink = Button(fFitxIgualButton, text = 'Hard Link', command = window.quit)
-bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = asd)
+bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = esborra_ig)
+bHLink = Button(fFitxIgualButton, text = 'Hard Link', command = hard_link)
+bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = soft_link)
 bSelecTotsA = Button(fFitxIgualButton, text = 'Selec Tots', command = seleccionar_tots_ig)
 bSelecCapA = Button(fFitxIgualButton, text = 'Selec Cap', command = deseleccionar_tots_ig)
 
@@ -281,8 +305,8 @@ lista_semb.pack(side = RIGHT, expand = TRUE, fill = X)
 #GUI's buttons for 'Fitxers Semblants'
 fFitxSemblButton = Frame(fSembl)
 bCompara = Button(fFitxSemblButton, text = 'Compara', command = compara_graf)
-bRenombra = Button(fFitxSemblButton, text = 'Renombra', command = window.quit)
-bEsborra = Button(fFitxSemblButton, text = 'Esborra', command = window.quit)
+bRenombra = Button(fFitxSemblButton, text = 'Renombra', command = renombra)
+bEsborra = Button(fFitxSemblButton, text = 'Esborra', command = esborra_semb)
 bSelecTotsB = Button(fFitxSemblButton, text = 'Selec Tots', command = seleccionar_tots_semb)
 bSelecCapB = Button(fFitxSemblButton, text = 'Selec Cap', command = deseleccionar_tots_semb)
 
