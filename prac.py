@@ -166,8 +166,6 @@ def llena_Listas(lista_inode, lista_path):
 		lista_inode.insert(END, os.stat(os.path.abspath(lista_semb.get(val).replace('~/', ''))).st_ino) 
 		lista_path.insert(END, lista_semb.get(val).replace('~/', ''))
 
-
-
 #Soft Link
 def soft_link():
 	if not lista_ig.get(0,END):
