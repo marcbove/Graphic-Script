@@ -8,7 +8,7 @@ import os, sys
 from collections import defaultdict
 import filecmp
 import subprocess
-from functions import *
+#from functions import *
 
 
 #Create window
@@ -25,7 +25,7 @@ dicc_fitx_semb = defaultdict(list)
 fit_desti = Listbox()
 
 #Function source
-def dirNameSrc(dir_NameSrc):
+def dirNameSrc():
 	dir_NameSrc.set(os.path.abspath(askdirectory()))
 
 #Function dest
@@ -46,6 +46,8 @@ def omplirDicc(fit_font):
 #Cerca de fitxers semblants
 def dicIgual():
 	try:
+		print 'directorios', dir_NameDst.get(), dir_NameSrc.get()
+		print 'diccionarios', dicc_fitx_ig, dicc_fitx_semb
 		fit_font = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameSrc.get()))
 		asd = os.listdir(dir_NameDst.get())
 		omplirDicc(fit_font)
@@ -178,14 +180,13 @@ def listas():
 			if elem_x in value:
 				lista_ig_act_src.append(key)
 				lista_ig_act_dest.append(elem_x)
-
+	
 	index=0
 	for i in range(0, len(lista_ig_act_dest)):
 		if lista_ig_act_dest[0].startswith('~'):
 			del lista_ig_act_dest[0]
 		if i==len(lista_ig_act_dest)/2:
 			break
-
 	return lista_ig_act_dest, lista_ig_act_src
 
 
@@ -194,35 +195,45 @@ def soft_link():
 	if not lista_ig.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros iguales, la lista está vacía")
 	else: 
-		
 		lista_ig_act_dest, lista_ig_act_src = listas()
-		print lista_ig_act_dest
-		p=subprocess.call(['/bin/sh','-c', './softlink.sh ',lista_ig_act_dest, lista_ig_act_src])
-		#subprocess.call('./esborra.sh')
+		esborra(lista_ig_act_dest)
+		print len(lista_ig_act_dest), len(lista_ig_act_src)
+		for x, y in lista_ig_act_dest, lista_ig_act_src:
+			os.symlink(y,x)
 
 def hard_link():
 	if not lista_ig.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros iguales, la lista está vacía")
 	else: 
-		subprocess.call('./hardlink.sh')
+		lista_ig_act_dest, lista_ig_act_src = listas()
+		esborra(lista_ig_act_dest)
+		print len(lista_ig_act_dest), len(lista_ig_act_src)
+		for x, y in lista_ig_act_dest, lista_ig_act_src:
+			os.link(y,x)
+		
 
-
-def esborra():
+def esborra(lista):
 	if not lista_ig.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista")
 	else: 
-		subprocess.call('./esborraig.sh')
+		print 'esborra', lista
+		for fitxer in lista:
+			os.remove(fitxer)
 
 
 def renombra():
-	if not lista_ig.get(0,END):
+	if not lista_semb.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros parecido, la lista está vacía")
 	else: 
-		subprocess.call('./esborraig.sh')
+		print lista_semb.get(0,END)
+		lista_ig_act_dest, lista_ig_act_src = listas()
+		for a in lista_ig_act_dest:
+			os.rename(a, str(a)+'copia')
 
 #GUI's First Line: ask origin directory
 
 fDirectFont = Frame(window)
+#lambda: dirNameSrc(dir_NameSrc)
 bDirectFont = Button(fDirectFont, text = 'Escolliu directori font', command = dirNameSrc)
 lDirectFont = Label(fDirectFont, textvariable = dir_NameSrc, relief = "sunken")
 
@@ -243,6 +254,8 @@ scrolOriginal.config(command = lista_or.yview)
 
 #GUI's second-to-last: selecciona tots/cap
 fSelecciona = Frame(window)
+#lambda: seleccionar_tots_or(lista_or)
+#lambda: deseleccionar_tots_or(lista_or)
 bTots = Button(fSelecciona, text = 'Selecciona Tots', command = seleccionar_tots_or)
 bCap = Button(fSelecciona, text = 'Selecciona Cap', command = deseleccionar_tots_or)
 
@@ -250,8 +263,10 @@ bCap = Button(fSelecciona, text = 'Selecciona Cap', command = deseleccionar_tots
 
 #GUI's Second Line: ask destination directory and search
 fDirectDest = Frame(window)
+#lambda: dirNameDst(dir_NameDst)
 bDirectDest = Button(fDirectDest, text = 'Escolliu directori destí', command = dirNameDst)
 lDirectDest = Label(fDirectDest, textvariable = dir_NameDst, relief = "sunken")
+#lambda: dicIgual(dicc_fitx_ig)
 bCerca = Button(fDirectDest, text = 'Cerca', command = dicIgual)
 
 
@@ -298,7 +313,7 @@ lista_ig.pack(side = RIGHT, expand = TRUE, fill = X)
 
 #Iguals' Buttons
 fFitxIgualButton = Frame(fIguals)
-bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = esborra)
+bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = lambda: esborra(lista_semb))
 bHLink = Button(fFitxIgualButton, text = 'Hard Link', command = hard_link)
 bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = soft_link)
 bSelecTotsA = Button(fFitxIgualButton, text = 'Selec Tots', command = seleccionar_tots_ig)
@@ -331,8 +346,8 @@ lista_semb.pack(side = RIGHT, expand = TRUE, fill = X)
 #GUI's buttons for 'Fitxers Semblants'
 fFitxSemblButton = Frame(fSembl)
 bCompara = Button(fFitxSemblButton, text = 'Compara', command = compara_graf)
-bRenombra = Button(fFitxSemblButton, text = 'Renombra', command = renombra)
-bEsborra = Button(fFitxSemblButton, text = 'Esborra', command = esborra)
+bRenombra = Button(fFitxSemblButton, text = 'Renombra', command = lambda: renombra())
+bEsborra = Button(fFitxSemblButton, text = 'Esborra', command = lambda: esborra(lista_semb))
 bSelecTotsB = Button(fFitxSemblButton, text = 'Selec Tots', command = seleccionar_tots_semb)
 bSelecCapB = Button(fFitxSemblButton, text = 'Selec Cap', command = deseleccionar_tots_semb)
 
