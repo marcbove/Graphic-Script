@@ -38,9 +38,9 @@ def omplirDicc(fit_font):
 		for f in files:
 			if f.endswith('txt'):
 				for fi in fit_font:
-					if fi == f and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path and path!='/home/milax/.local/share/Trash/files' and os.path.islink(path+f)==False:
+					if fi == f and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path and path!='/home/milax/.local/share/Trash/files' and not os.path.islink(path+'/'+f):
 						dicc_fitx_ig[f].append(path+'/'+f)
-					elif fi == f and dir_NameSrc.get()!=path and path!='/home/milax/.local/share/Trash/files' and not os.path.islink(path+f):
+					elif fi == f and dir_NameSrc.get()!=path and path!='/home/milax/.local/share/Trash/files' and not os.path.islink(path+'/'+f):
 						dicc_fitx_semb[f].append(path+'/'+f)
 	print 'semb', dicc_fitx_semb
 	print 'ig', dicc_fitx_ig
@@ -189,9 +189,6 @@ def listas():
 			del lista_ig_act_dest[0]
 		if i==len(lista_ig_act_dest)/2:
 			break
-
-	print 'destino',lista_ig_act_dest
-	print 'fuente',lista_ig_act_src
 	return lista_ig_act_dest, lista_ig_act_src
 
 
@@ -204,7 +201,6 @@ def soft_link():
 		esborra(lista_ig_act_dest)
 		print len(lista_ig_act_dest), len(lista_ig_act_src)
 		for i in range (0, len(lista_ig_act_dest)):
-			print dir_NameSrc.get()+'/'+lista_ig_act_src[i]
 			os.symlink(dir_NameSrc.get()+'/'+lista_ig_act_src[i],lista_ig_act_dest[i])
 
 def hard_link():
@@ -215,7 +211,6 @@ def hard_link():
 		esborra(lista_ig_act_dest)
 		print len(lista_ig_act_dest), len(lista_ig_act_src)
 		for i in range (0, len(lista_ig_act_dest)):
-			print dir_NameSrc.get()+'/'+lista_ig_act_src[i]
 			os.link(dir_NameSrc.get()+'/'+lista_ig_act_src[i],lista_ig_act_dest[i])
 		
 
