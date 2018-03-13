@@ -42,14 +42,10 @@ def omplirDicc(fit_font):
 						dicc_fitx_ig[f].append(path+'/'+f)
 					elif fi == f and dir_NameSrc.get()!=path and path!='/home/milax/.local/share/Trash/files' and not os.path.islink(path+'/'+f):
 						dicc_fitx_semb[f].append(path+'/'+f)
-	print 'semb', dicc_fitx_semb
-	print 'ig', dicc_fitx_ig
 
 #Cerca de fitxers semblants
 def dicIgual():
 	try:
-		print 'directorios', dir_NameDst.get(), dir_NameSrc.get()
-		print 'diccionarios', dicc_fitx_ig, dicc_fitx_semb
 		fit_font = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameSrc.get()))
 		asd = os.listdir(dir_NameDst.get())
 		omplirDicc(fit_font)
@@ -198,8 +194,7 @@ def soft_link():
 		tkMessageBox.showwarning("Warning", "No hay ficheros iguales, la lista está vacía")
 	else: 
 		lista_ig_act_dest, lista_ig_act_src = listas()
-		esborra(lista_ig_act_dest)
-		print len(lista_ig_act_dest), len(lista_ig_act_src)
+		esborra_link(lista_ig_act_dest)
 		for i in range (0, len(lista_ig_act_dest)):
 			os.symlink(dir_NameSrc.get()+'/'+lista_ig_act_src[i],lista_ig_act_dest[i])
 
@@ -208,19 +203,29 @@ def hard_link():
 		tkMessageBox.showwarning("Warning", "No hay ficheros iguales, la lista está vacía")
 	else: 
 		lista_ig_act_dest, lista_ig_act_src = listas()
-		esborra(lista_ig_act_dest)
-		print len(lista_ig_act_dest), len(lista_ig_act_src)
+		esborra_link(lista_ig_act_dest)
 		for i in range (0, len(lista_ig_act_dest)):
 			os.link(dir_NameSrc.get()+'/'+lista_ig_act_src[i],lista_ig_act_dest[i])
 		
 
-def esborra(lista):
-	if not lista_ig.get(0,END):
+def esborra_link(lista):
+	if not lista:
 		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista")
 	else: 
-		print 'esborra', lista
 		for fitxer in lista:
 			os.remove(fitxer)
+		for i in lista.curselection():	
+			lista.delete(i)	
+
+def esborra(lista):
+	if not lista.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista")
+	else: 
+		for fitxer in lista.get(0,END):
+			fitxer=fitxer.replace('~',dir_NameDst.get()+'/')
+			os.remove(fitxer)
+		for i in lista.curselection():	
+			lista.delete(i)
 
 
 def renombra():
@@ -228,9 +233,16 @@ def renombra():
 		tkMessageBox.showwarning("Warning", "No hay ficheros parecido, la lista está vacía")
 	else: 
 		print lista_semb.get(0,END)
-		lista_ig_act_dest, lista_ig_act_src = listas()
-		for a in lista_ig_act_dest:
-			os.rename(a, str(a)+'copia')
+
+		for a in lista_semb.curselection():
+			b=lista_semb.get(a)
+			c=b.replace('.txt','copia.txt')
+			b=b.replace('~',dir_NameDst.get()+'/')
+			os.rename(b, b.replace('.txt','copia.txt'))
+			lista_semb.insert(END, c)
+		for i in lista_semb.curselection():	
+			lista_semb.delete(i)
+
 
 #GUI's First Line: ask origin directory
 
@@ -315,7 +327,7 @@ lista_ig.pack(side = RIGHT, expand = TRUE, fill = X)
 
 #Iguals' Buttons
 fFitxIgualButton = Frame(fIguals)
-bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = lambda: esborra(lista_semb))
+bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = lambda: esborra(lista_ig))
 bHLink = Button(fFitxIgualButton, text = 'Hard Link', command = hard_link)
 bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = soft_link)
 bSelecTotsA = Button(fFitxIgualButton, text = 'Selec Tots', command = seleccionar_tots_ig)
