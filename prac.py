@@ -209,13 +209,13 @@ def hard_link():
 		
 
 def esborra_link(lista):
-	if not lista:
+	if not lista and not list_ig.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista")
 	else: 
 		for fitxer in lista:
 			os.remove(fitxer)
-		for i in lista.curselection():	
-			lista.delete(i)	
+		for i in lista_ig.curselection():	
+			lista_ig.delete(i)	
 
 def esborra(lista):
 	if not lista.get(0,END):
