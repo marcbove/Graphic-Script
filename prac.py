@@ -8,6 +8,7 @@ import os, sys
 from collections import defaultdict
 import filecmp
 import subprocess
+from functions import *
 
 
 #Create window
@@ -24,7 +25,7 @@ dicc_fitx_semb = defaultdict(list)
 fit_desti = Listbox()
 
 #Function source
-def dirNameSrc():
+def dirNameSrc(dir_NameSrc):
 	dir_NameSrc.set(os.path.abspath(askdirectory()))
 
 #Function dest
@@ -37,7 +38,7 @@ def omplirDicc(fit_font):
 		for f in files:
 			if f.endswith('txt'):
 				for fi in fit_font:
-					if fi == f and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path:
+					if fi == f and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+f, shallow=False) and dir_NameSrc.get()!=path and path!='/home/milax/.local/share/Trash/files':
 						dicc_fitx_ig[f].append(path+'/'+f)
 					elif fi == f and dir_NameSrc.get()!=path:
 						dicc_fitx_semb[f].append(path+'/'+f)
@@ -236,7 +237,7 @@ fFitxers = Frame(window)
 fOriginals = Frame(fFitxers)
 lOriginals = Label(fOriginals, text = 'Fitxers Originals:')
 scrolOriginal = Scrollbar(fOriginals, orient = VERTICAL)
-lista_or = Listbox(fOriginals, yscrollcommand = scrolOriginal.set)
+lista_or = Listbox(fOriginals, yscrollcommand = scrolOriginal.set, selectmode = 'multiple')
 scrolOriginal.config(command = lista_or.yview)
 
 
@@ -289,7 +290,7 @@ lIguals.pack(side = TOP, anchor = W)
 #Iguals' Scrollbox
 fIgualScroll = Frame(fIguals)
 scrollIguals = Scrollbar(fIgualScroll, orient = VERTICAL)
-lista_ig = Listbox(fIgualScroll, yscrollcommand = scrollIguals.set)
+lista_ig = Listbox(fIgualScroll, yscrollcommand = scrollIguals.set, selectmode = 'multiple')
 scrollIguals.config(command = lista_ig.yview)
 
 scrollIguals.pack(side = LEFT, fill = Y)
@@ -321,7 +322,7 @@ lSembl.pack(side = TOP, anchor = W)
 #Semblants' ScrollBox
 fSemblScroll = Frame(fSembl)
 scrollSembl = Scrollbar(fSemblScroll, orient = VERTICAL)
-lista_semb = Listbox(fSemblScroll, yscrollcommand = scrollSembl.set)
+lista_semb = Listbox(fSemblScroll, yscrollcommand = scrollSembl.set, selectmode = 'multiple')
 scrollSembl.config(command = lista_semb.yview)
 
 scrollSembl.pack(side = LEFT, fill = Y)
