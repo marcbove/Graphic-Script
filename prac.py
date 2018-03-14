@@ -191,22 +191,7 @@ def listas_semb():
 			if elem_x in value:
 				lista_semb_act_src.append(key)
 				lista_semb_act_dest[i]=elem_x
-
-		#for elem in lista_semb_act_dest:
-			#elem_x = dir_NameDst.get()+elem.replace('~', '')
-			#if elem_x in value:
-				#lista_semb_act_src.append(key)
-				#lista_semb_act_dest=map(lambda x: x=elem_x, lista_semb_act_dest)
-	print lista_semb_act_src
-	print lista_semb_act_dest
-	#index=0
-	#for i in range(0, len(lista_semb_act_dest)):
-		#if lista_semb_act_dest[0].startswith('~'):
-			#del lista_semb_act_dest[0]
-		#if i==len(lista_semb_act_dest)/2:
-			#break
-	#print lista_semb_act_src
-	#print lista_semb_act_dest
+				
 	return lista_semb_act_dest, lista_semb_act_src
 
 #listas para pasar por parametros 
@@ -249,9 +234,6 @@ def esborra_link(lista):
 	else: 
 		for fitxer in lista:
 			os.remove(fitxer)
-		for i in lista_ig.curselection():
-			print i	
-			lista_ig.delete(i)	
 
 def esborra(lista):
 	if not lista.get(0,END):
@@ -260,9 +242,8 @@ def esborra(lista):
 		for fitxer in lista.get(0,END):
 			fitxer=fitxer.replace('~',dir_NameDst.get()+'/')
 			os.remove(fitxer)
-		for i in lista.curselection():
-			print i	
-			lista.delete(i)
+		for elem_tupla in lista.curselection()[::-1]:
+			lista.delete(elem_tupla)
 
 
 def renombra():
