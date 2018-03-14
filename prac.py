@@ -15,7 +15,7 @@ import subprocess
 window=Tk()
 window.title("Cerca fitxers Redundants")
 window.minsize(500,450)
-window.maxsize(500,450)
+#window.maxsize(500,450)
 
 #Variables
 dir_NameDst = StringVar()
