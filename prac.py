@@ -157,34 +157,69 @@ def compara_graf():
 		fnum.pack(side = LEFT, expand = TRUE, fill = BOTH)
 		fcomp.pack(side = LEFT, expand = TRUE, fill = BOTH)
 
-		llena_Listas(lista_inode, lista_path)
+		llena_Listas(lista_inode, lista_path, lista_num)
 
 
 #Función crea GUI compara
-def llena_Listas(lista_inode, lista_path):
+def llena_Listas(lista_inode, lista_path, lista_num):
 	for val in lista_semb.curselection():
+		
 		lista_inode.insert(END, os.stat(os.path.abspath(lista_semb.get(val).replace('~/', ''))).st_ino) 
 		lista_path.insert(END, lista_semb.get(val).replace('~/', ''))
+		
+	lista_num_dest, lista_num_src = listas_semb()
+
+	for i in range(0, len(lista_num_dest)):
+
+		with open(lista_num_dest[i], 'r') as dest:
+			dest_array = dest.read().split('\n')
+	
+		with open(lista_num_src[i], 'r') as src:
+			src_array = src.read().split('\n')	
+			
+		lista_num.insert(END,len(filter(lambda x: x not in src_array, dest_array)))
+			
 
 
+def listas_semb():
+	lista_semb_act_dest = [lista_semb.get(i) for i in lista_semb.curselection()]
+	lista_semb_act_src = []
+	for key, value in dicc_fitx_semb.iteritems():
+		
+		for i in range(0, len(lista_semb_act_dest)):
+			elem_x = dir_NameDst.get()+lista_semb_act_dest[i].replace('~', '')
+			if elem_x in value:
+				lista_semb_act_src.append(key)
+				lista_semb_act_dest[i]=elem_x
+
+		#for elem in lista_semb_act_dest:
+			#elem_x = dir_NameDst.get()+elem.replace('~', '')
+			#if elem_x in value:
+				#lista_semb_act_src.append(key)
+				#lista_semb_act_dest=map(lambda x: x=elem_x, lista_semb_act_dest)
+	print lista_semb_act_src
+	print lista_semb_act_dest
+	#index=0
+	#for i in range(0, len(lista_semb_act_dest)):
+		#if lista_semb_act_dest[0].startswith('~'):
+			#del lista_semb_act_dest[0]
+		#if i==len(lista_semb_act_dest)/2:
+			#break
+	#print lista_semb_act_src
+	#print lista_semb_act_dest
+	return lista_semb_act_dest, lista_semb_act_src
 
 #listas para pasar por parametros 
-def listas():
+def listas_ig():
 	lista_ig_act_dest = [lista_ig.get(i) for i in lista_ig.curselection()]
 	lista_ig_act_src = []
 	for key, value in dicc_fitx_ig.iteritems():
-		for elem in lista_ig_act_dest:
-			elem_x = dir_NameDst.get()+elem.replace('~', '')
+		for i in range(0, len(lista_ig_act_dest)):
+			elem_x = dir_NameDst.get()+lista_ig_act_dest[i].replace('~', '')
 			if elem_x in value:
 				lista_ig_act_src.append(key)
-				lista_ig_act_dest.append(elem_x)
-	
-	index=0
-	for i in range(0, len(lista_ig_act_dest)):
-		if lista_ig_act_dest[0].startswith('~'):
-			del lista_ig_act_dest[0]
-		if i==len(lista_ig_act_dest)/2:
-			break
+				lista_ig_act_dest[i]=elem_x
+
 	return lista_ig_act_dest, lista_ig_act_src
 
 
@@ -193,7 +228,7 @@ def soft_link():
 	if not lista_ig.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros iguales, la lista está vacía")
 	else: 
-		lista_ig_act_dest, lista_ig_act_src = listas()
+		lista_ig_act_dest, lista_ig_act_src = listas_ig()
 		esborra_link(lista_ig_act_dest)
 		for i in range (0, len(lista_ig_act_dest)):
 			os.symlink(dir_NameSrc.get()+'/'+lista_ig_act_src[i],lista_ig_act_dest[i])
@@ -202,7 +237,7 @@ def hard_link():
 	if not lista_ig.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros iguales, la lista está vacía")
 	else: 
-		lista_ig_act_dest, lista_ig_act_src = listas()
+		lista_ig_act_dest, lista_ig_act_src = listas_ig()
 		esborra_link(lista_ig_act_dest)
 		for i in range (0, len(lista_ig_act_dest)):
 			os.link(dir_NameSrc.get()+'/'+lista_ig_act_src[i],lista_ig_act_dest[i])
@@ -214,7 +249,8 @@ def esborra_link(lista):
 	else: 
 		for fitxer in lista:
 			os.remove(fitxer)
-		for i in lista_ig.curselection():	
+		for i in lista_ig.curselection():
+			print i	
 			lista_ig.delete(i)	
 
 def esborra(lista):
@@ -224,7 +260,8 @@ def esborra(lista):
 		for fitxer in lista.get(0,END):
 			fitxer=fitxer.replace('~',dir_NameDst.get()+'/')
 			os.remove(fitxer)
-		for i in lista.curselection():	
+		for i in lista.curselection():
+			print i	
 			lista.delete(i)
 
 
@@ -236,13 +273,12 @@ def renombra():
 
 		for a in lista_semb.curselection():
 			b=lista_semb.get(a)
-			c=b.replace('.txt','copia.txt')
-			b=b.replace('~',dir_NameDst.get()+'/')
-			os.rename(b, b.replace('.txt','copia.txt'))
-			lista_semb.insert(END, c)
-		for i in lista_semb.curselection():	
-			lista_semb.delete(i)
-
+			b=b.replace('~', dir_NameDst.get()+'/')
+			os.rename(b, b.replace('.txt','(copia).txt'))
+		for a in lista_semb.curselection():	
+			lista_semb.delete(a)
+		
+		print len(lista_semb.curselection())
 
 #GUI's First Line: ask origin directory
 

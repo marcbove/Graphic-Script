@@ -1,13 +1,13 @@
 #!/bin/bash
 mkdir -p Carp1/Carp1_1 Carp2 Carp3/Carp3_{1,2}
-echo -e "\nDirectoris creats!"
+echo -e "\nDirectoris creats!\nFitxers i directoris:"
 ls
 #mkdir -p Carp2
 #mkdir -p Carp3/Carp31
-A="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-\nnisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit 
-\nesse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+A="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+\nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+\nnisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+\nesse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
 \nculpa qui officia deserunt mollit anim id est laborum."
 B="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
 \ntotam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
@@ -49,4 +49,5 @@ cd Carp3_2/
 echo -e $A > "lorem.txt"
 cd ..
 cd ..
-echo -e "\nFitxers Creats!"
+echo -e "\nFitxers Creats!\n"
+./$1
