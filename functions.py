@@ -11,12 +11,10 @@ import subprocess
 
 dir_NameDst = ''
 dir_NameSrc = ''
-dicc_fitx_ig = {}
-dicc_fitx_semb = {}
 lista_ig = []
 lista_semb = []
-lista_ig_x_src = [] 
-lista_ig_x_dest = []
+lista_x_act_src = [] 
+lista_x_act_dest = []
 lista_or = []
 
 def dirName(name_dir):
@@ -36,6 +34,8 @@ def omplirDicc(fit_font):
 #Cerca de fitxers semblants
 def dicIgual():
 	try:
+		dicc_fitx_ig={}
+		dicc_fitx_semb={}
 		fit_font = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameSrc.get()))
 		asd = os.listdir(dir_NameDst.get())
 		omplirDicc(fit_font)
@@ -43,18 +43,18 @@ def dicIgual():
 
 		for var in fit_or:
 			lista_or.insert(END, var)
-
-		for key, val in dicc_fitx_ig.iteritems():
-			for i in val:
-				lista_ig.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get()))
-
-		for key, val in dicc_fitx_semb.iteritems():
-			for i in val:
-				lista_semb.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get()))
+		
+		llenarListas(lista_ig, dicc_fitx_ig)
+		llenarListas(lista_semb, dicc_fitx_semb)
 
 	except OSError, e:
 		tkMessageBox.showerror("Error", "Introduzca directorios")
-			
+
+def llenarListas(lista, diccionario):
+	for key, val in diccionario.iteritems():
+			for i in val:
+				lista.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get()))
+
 #Función que selecciona todos los ficheros originales de la lista
 def seleccionar_tots(lista):
 	if not lista.get(0,END):
@@ -85,17 +85,17 @@ def llena_Listas(lista_inode, lista_path, lista_num):
 		lista_num.insert(END,len(filter(lambda x: x not in src_array, dest_array)))
 				
 #listas para pasar por parametros 
-def listas_semb_ig(lista):
-	lista_semb_x_dest = [lista.get(i) for i in lista.curselection()]
-	lista_semb_x_src = []
-	for key, value in dicc_fitx_semb.iteritems():
-		for i in range(0, len(lista_semb_x_dest)):
-			elem_x = dir_NameDst.get()+lista_semb_x_dest[i].replace('~', '')
+def listas_semb_ig(lista, diccionari_fitxer):
+	lista_x_act_dest = [lista.get(i) for i in lista.curselection()]
+	lista_x_act_src = []
+	for key, value in diccionari_fitxer.iteritems():
+		for i in range(0, len(lista_x_act_dest)):
+			elem_x = dir_NameDst.get()+lista_x_act_dest[i].replace('~', '')
 			if elem_x in value:
-				lista_semb_x_src.append(key)
-				lista_semb_x_dest[i]=elem_x
+				lista_x_act_src.append(key)
+				lista_x_act_dest[i]=elem_x
 
-	return lista_semb_x_dest, lista_semb_x_src
+	return lista_x_act_dest, lista_x_act_src
 
 #Soft Link
 def link(type):
@@ -107,9 +107,11 @@ def link(type):
 		for i in range (0, len(lista_ig_x_dest)):
 			if type == 'soft':
 				os.symlink(dir_NameSrc.get()+'/'+lista_ig_x_src[i],lista_ig_x_dest[i])
-			else:
+			elif type == 'hard':
 				os.link(dir_NameSrc.get()+'/'+lista_ig_x_src[i],lista_ig_x_dest[i])
-
+			else:
+				print 'Tipo no correcto'
+				
 def esborra_link(lista):
 	if not lista and not list_ig.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista")
