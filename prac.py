@@ -145,8 +145,13 @@ fOriginals.pack(side = LEFT, expand = TRUE, fill = BOTH)
 fIgualSembl.pack(side = LEFT, expand = TRUE, fill = X)
 fFitxers.pack(side = LEFT, expand = TRUE, fill = X)
 
-
-func = GUI(dir_NameDst.get(), dir_NameSrc.get(), dicc_fitx_ig, dicc_fitx_semb, lista_ig, lista_semb)
-
+func.dir_NameDst = dir_NameDst
+func.dir_NameSrc = dir_NameSrc
+func.dicc_fitx_ig = dicc_fitx_ig
+func.dicc_fitx_semb = dicc_fitx_semb
+func.lista_ig = lista_ig
+func.lista_semb = lista_semb
+func.lista_ig_act_src = lista_ig_act_src 
+func.lista_ig_act_dest = lista_ig_act_dest
 
 window.mainloop()
