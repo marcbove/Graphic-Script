@@ -15,14 +15,15 @@ dicc_fitx_ig = {}
 dicc_fitx_semb = {}
 lista_ig = []
 lista_semb = []
-lista_ig_act_src = [] 
-lista_ig_act_dest = []
+lista_ig_x_src = [] 
+lista_ig_x_dest = []
+lista_or = []
 
-def dirName(self, name_dir):
+def dirName(name_dir):
 	name_dir.set(os.path.abspath(askdirectory()))
 
 #Function 
-def omplirDicc(self, fit_font, dir_NameSrc, dir_NameDst):
+def omplirDicc(fit_font):
 	for path, dirs, files in os.walk(dir_NameDst.get()):
 		for f in files:
 			if f.endswith('txt'):
@@ -33,11 +34,11 @@ def omplirDicc(self, fit_font, dir_NameSrc, dir_NameDst):
 						dicc_fitx_semb[f].append(path+'/'+f)
 
 #Cerca de fitxers semblants
-def dicIgual(self, dir_NameSrc, dir_NameDst):
+def dicIgual():
 	try:
 		fit_font = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameSrc.get()))
 		asd = os.listdir(dir_NameDst.get())
-		self.omplirDicc(fit_font, dir_NameSrc, dir_NameDst)
+		omplirDicc(fit_font)
 		fit_or = filter(lambda fil: fil in dicc_fitx_ig.keys() or fil in dicc_fitx_semb.keys(), fit_font)
 
 		for var in fit_or:
@@ -55,26 +56,26 @@ def dicIgual(self, dir_NameSrc, dir_NameDst):
 		tkMessageBox.showerror("Error", "Introduzca directorios")
 			
 #Función que selecciona todos los ficheros originales de la lista
-def seleccionar_tots(self, lista):
+def seleccionar_tots(lista):
 	if not lista.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista!")
 	else:
 		lista.selection_set(0, END)
 		
 #Función que deselecciona todos los ficheros originales de la lista
-def deseleccionar_tots(self, lista):
+def deseleccionar_tots(lista):
 	if not lista.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista!")
 	else:
 		lista.selection_clear(0, END)
 
 #Función crea GUI compara
-def llena_Listas(self, lista_inode, lista_path, lista_num):
+def llena_Listas(lista_inode, lista_path, lista_num):
 	for val in lista_semb.curselection():
 		lista_inode.insert(END, os.stat(os.path.abspath(lista_semb.get(val).replace('~/', ''))).st_ino) 
 		lista_path.insert(END, lista_semb.get(val).replace('~/', ''))
 			
-	lista_num_dest, lista_num_src = listas_semb_ig()
+	lista_num_dest, lista_num_src = listas_semb_ig(lista_semb)
 
 	for i in range(0, len(lista_num_dest)):
 		with open(lista_num_dest[i], 'r') as dest:
@@ -84,58 +85,39 @@ def llena_Listas(self, lista_inode, lista_path, lista_num):
 		lista_num.insert(END,len(filter(lambda x: x not in src_array, dest_array)))
 				
 #listas para pasar por parametros 
-def listas_semb_ig(self, lista):
-	lista_semb_act_dest = [lista.get(i) for i in lista.curselection()]
-	lista_semb_act_src = []
+def listas_semb_ig(lista):
+	lista_semb_x_dest = [lista.get(i) for i in lista.curselection()]
+	lista_semb_x_src = []
 	for key, value in dicc_fitx_semb.iteritems():
-		for i in range(0, len(lista_semb_act_dest)):
-			elem_x = dir_NameDst.get()+lista_semb_act_dest[i].replace('~', '')
+		for i in range(0, len(lista_semb_x_dest)):
+			elem_x = dir_NameDst.get()+lista_semb_x_dest[i].replace('~', '')
 			if elem_x in value:
-				lista_semb_act_src.append(key)
-				lista_semb_act_dest[i]=elem_x
+				lista_semb_x_src.append(key)
+				lista_semb_x_dest[i]=elem_x
 
-	return lista_semb_act_dest, lista_semb_act_src
-
-#listas para pasar por parametros 
-def listas():
-	lista_ig_act_dest = [lista_ig.get(i) for i in lista_ig.curselection()]
-	lista_ig_act_src = []
-	for key, value in dicc_fitx_ig.iteritems():
-		for elem in lista_ig_act_dest:
-			elem_x = dir_NameDst.get()+elem.replace('~', '')
-			if elem_x in value:
-				lista_ig_act_src.append(key)
-				lista_ig_act_dest.append(elem_x)
-	index=0
-	for i in range(0, len(lista_ig_act_dest)):
-		if lista_ig_act_dest[0].startswith('~'):
-			del lista_ig_act_dest[0]
-		if i==len(lista_ig_act_dest)/2:
-			break
-
-	return lista_ig_act_dest, lista_ig_act_src
+	return lista_semb_x_dest, lista_semb_x_src
 
 #Soft Link
-def link(self, type):
+def link(type):
 	if not lista_ig.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros iguales, la lista está vacía")
 	else: 
-		lista_ig_act_dest, lista_ig_act_src = listas_ig()
-		esborra_link(lista_ig_act_dest)
-		for i in range (0, len(lista_ig_act_dest)):
+		lista_ig_x_dest, lista_ig_x_src = listas_semb_ig(lista_ig)
+		esborra_link(lista_ig_x_dest)
+		for i in range (0, len(lista_ig_x_dest)):
 			if type == 'soft':
-				os.symlink(dir_NameSrc.get()+'/'+lista_ig_act_src[i],lista_ig_act_dest[i])
+				os.symlink(dir_NameSrc.get()+'/'+lista_ig_x_src[i],lista_ig_x_dest[i])
 			else:
-				os.link(dir_NameSrc.get()+'/'+lista_ig_act_src[i],lista_ig_act_dest[i])
+				os.link(dir_NameSrc.get()+'/'+lista_ig_x_src[i],lista_ig_x_dest[i])
 
-def esborra_link(self, lista):
+def esborra_link(lista):
 	if not lista and not list_ig.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista")
 	else: 
 		for fitxer in lista:
 			os.remove(fitxer)
 
-def esborra(self, lista):
+def esborra(lista):
 	if not lista.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista")
 	else: 
@@ -145,21 +127,19 @@ def esborra(self, lista):
 		for elem_tupla in lista.curselection()[::-1]:
 			lista.delete(elem_tupla)
 
-def renombra(self):
+def renombra():
 	if not lista_semb.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros parecido, la lista está vacía")
 	else: 
-		print lista_semb.get(0,END)
 		for a in lista_semb.curselection():
 			b=lista_semb.get(a)
 			b=b.replace('~', dir_NameDst.get()+'/')
 			os.rename(b, b.replace('.txt','(copia).txt'))
-		for a in lista_semb.curselection():	
-			lista_semb.delete(a)
-		print len(lista_semb.curselection())
+		for elem_tupla in lista_semb.curselection()[::-1]:	
+			lista_semb.delete(elem_tupla)
 
 #Función crea GUI compara
-def compara_graf(self):
+def compara_graf():
 	if not lista_semb.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros parecidos")
 	else:

@@ -8,7 +8,7 @@ import os, sys
 from collections import defaultdict
 import filecmp
 import subprocess
-from functions import *
+import functions as func
 
 #Create window
 window=Tk()
@@ -49,7 +49,7 @@ fDirectDest = Frame(window)
 bDirectDest = Button(fDirectDest, text = 'Escolliu directori destí', command = lambda: func.dirName(dir_NameDst))
 lDirectDest = Label(fDirectDest, textvariable = dir_NameDst, relief = "sunken")
 
-bCerca = Button(fDirectDest, text = 'Cerca', command = lambda: func.dicIgual(dir_NameSrc, dir_NameDst))
+bCerca = Button(fDirectDest, text = 'Cerca', command = lambda: func.dicIgual())
 
 bDirectDest.pack(side = LEFT)
 lDirectDest.pack(side = LEFT, expand = TRUE, fill = X)
@@ -151,7 +151,6 @@ func.dicc_fitx_ig = dicc_fitx_ig
 func.dicc_fitx_semb = dicc_fitx_semb
 func.lista_ig = lista_ig
 func.lista_semb = lista_semb
-func.lista_ig_act_src = lista_ig_act_src 
-func.lista_ig_act_dest = lista_ig_act_dest
+func.lista_or = lista_or
 
 window.mainloop()
