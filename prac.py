@@ -250,16 +250,12 @@ def renombra():
 	if not lista_semb.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros parecido, la lista está vacía")
 	else: 
-		print lista_semb.get(0,END)
-
 		for a in lista_semb.curselection():
 			b=lista_semb.get(a)
 			b=b.replace('~', dir_NameDst.get()+'/')
 			os.rename(b, b.replace('.txt','(copia).txt'))
-		for a in lista_semb.curselection():	
+		for a in lista_semb.curselection()[::-1]:	
 			lista_semb.delete(a)
-		
-		print len(lista_semb.curselection())
 
 #GUI's First Line: ask origin directory
 
