@@ -1,4 +1,10 @@
 #!/bin/bash
+if [ $# -ne 1 ]; then 
+	echo "Error! Introdueix el nom de l'script Python!"
+	echo "exit 1"
+	exit 1
+fi
+cd ..
 mkdir -p Carp1/Carp1_1 Carp2 Carp3/Carp3_{1,2}
 echo -e "\nDirectoris creats!\nFitxers i directoris:"
 ls
@@ -50,4 +56,5 @@ echo -e $A > "lorem.txt"
 cd ..
 cd ..
 echo -e "\nFitxers Creats!\n"
-./$1
+./src/$1
+exit 0
