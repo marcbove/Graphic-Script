@@ -33,10 +33,10 @@ def omplirDicc(fit_font):
 				for fi in fit_font:
 					b = fi.replace(' ', '')
 					if b == a and filecmp.cmp(dir_NameSrc.get()+'/'+b, path+'/'+(f), shallow=False) and dir_NameSrc.get()!=path and path!='/home/milax/.local/share/Trash/files' and not os.path.islink(path+'/'+a):
-						dicc_fitx_ig[a].append(path+'/'+f)
+						dicc_fitx_ig[fi].append(path+'/'+f)
 						print dicc_fitx_ig
-					elif b == a and dir_NameSrc.get()!=path and not os.path.islink(path+'/'+a):
-						dicc_fitx_semb[a].append(path+'/'+f)
+					elif b == a and dir_NameSrc.get()!=path and not os.path.islink(path+'/'+f):
+						dicc_fitx_semb[fi].append(path+'/'+f)
 
 #Cerca de fitxers semblants
 def dicIgual():
