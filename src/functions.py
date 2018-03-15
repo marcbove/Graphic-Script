@@ -216,6 +216,5 @@ def compara_graf():
 		fnum.pack(side = LEFT, expand = TRUE, fill = BOTH)
 		fcomp.pack(side = LEFT, expand = TRUE, fill = BOTH)
 
-
 		#Omple les Listbox
 		llena_Listas(lista_inode, lista_path, lista_num)
