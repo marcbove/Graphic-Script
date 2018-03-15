@@ -1,5 +1,4 @@
 #!/bin/bash
-cd ..
 echo -e "\nFitxers abans d'eliminar:"
 ls
 #-r recursivo, -f para que no le importe si no existe

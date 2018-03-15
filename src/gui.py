@@ -57,7 +57,7 @@ bCerca.pack(side = LEFT)
 
 #GUI's last line: exit button
 fSortir = Frame(window)
-bSortir = Button(fSortir, text = 'Sortir', command = window.quit)
+bSortir = Button(fSortir, text = 'Sortir', command = lambda: func.sortir(window))
 
 bSortir.pack(side = LEFT)
 

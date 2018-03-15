@@ -218,3 +218,8 @@ def compara_graf():
 
 		#Omple les Listbox
 		llena_Listas(lista_inode, lista_path, lista_num)
+
+def sortir(window):
+	if  tkMessageBox.askquestion('Sortir', "Segur que voleu sortir de l'aplicació?", icon= 'warning') == 'yes':
+		window.quit()
+		os.system('./src/destruccio_fitxers.sh')
