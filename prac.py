@@ -88,7 +88,7 @@ lista_ig.pack(side = RIGHT, expand = TRUE, fill = X)
 
 #Iguals' Buttons
 fFitxIgualButton = Frame(fIguals)
-bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = lambda: func.esborra(lista_ig))
+bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = lambda: func.esborra(lista_ig, dicc_fitx_ig))
 bHLink = Button(fFitxIgualButton, text = 'Hard Link', command = lambda: func.link('hard'))
 bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = lambda: func.link('soft'))
 bSelecTotsA = Button(fFitxIgualButton, text = 'Selec Tots', command = lambda: func.seleccionar_tots(lista_ig))
@@ -122,7 +122,7 @@ lista_semb.pack(side = RIGHT, expand = TRUE, fill = X)
 fFitxSemblButton = Frame(fSembl)
 bCompara = Button(fFitxSemblButton, text = 'Compara', command = lambda: func.compara_graf())
 bRenombra = Button(fFitxSemblButton, text = 'Renombra', command = lambda: func.renombra())
-bEsborra = Button(fFitxSemblButton, text = 'Esborra', command = lambda: func.esborra(lista_semb))
+bEsborra = Button(fFitxSemblButton, text = 'Esborra', command = lambda: func.esborra(lista_semb, dicc_fitx_semb))
 bSelecTotsB = Button(fFitxSemblButton, text = 'Selec Tots', command = lambda: func.seleccionar_tots(lista_semb))
 bSelecCapB = Button(fFitxSemblButton, text = 'Selec Cap', command = lambda: func.deseleccionar_tots(lista_semb))
 

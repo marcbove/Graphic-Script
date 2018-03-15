@@ -41,8 +41,8 @@ cd Carp3/
 echo -e $C > "lorem.txt"
 echo -e $B > "ipsum.txt"
 cd Carp3_1/
-echo -e $B > "ipsum.txt"
-echo -e $C > "lorem.txt"
+echo -e $B > "i psum.txt"
+echo -e $C > "lor em.txt"
 echo -e $C > "remsum.txt"
 cd ..
 cd Carp3_2/
