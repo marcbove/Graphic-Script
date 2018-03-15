@@ -32,9 +32,8 @@ def omplirDicc(fit_font):
 				a = f.replace(' ', '')
 				for fi in fit_font:
 					b = fi.replace(' ', '')
-					if b == a and filecmp.cmp(dir_NameSrc.get()+'/'+b, path+'/'+(f), shallow=False) and dir_NameSrc.get()!=path and path!='/home/milax/.local/share/Trash/files' and not os.path.islink(path+'/'+a):
+					if b == a and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+(f), shallow=False) and dir_NameSrc.get()!=path and path!='/home/milax/.local/share/Trash/files' and not os.path.islink(path+'/'+f):
 						dicc_fitx_ig[fi].append(path+'/'+f)
-						print dicc_fitx_ig
 					elif b == a and dir_NameSrc.get()!=path and not os.path.islink(path+'/'+f):
 						dicc_fitx_semb[fi].append(path+'/'+f)
 
@@ -139,8 +138,6 @@ def esborra(lista, diccionari):
 
 		for elem_tupla in lista.curselection()[::-1]:
 			lista.delete(elem_tupla)
-
-		print lista.get(0,END)
 		
 #Renombra els fitxers activats de la llista de fitxers semblants canviant '.txt' per '(copia).txt'
 #Esborra de la ListBox de fitxers semblants els fitxers als quals se'ls ha canviat el nom

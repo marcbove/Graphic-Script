@@ -94,13 +94,13 @@ bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = lambda: func.lin
 bSelecTotsA = Button(fFitxIgualButton, text = 'Selec Tots', command = lambda: func.seleccionar_tots(lista_ig))
 bSelecCapA = Button(fFitxIgualButton, text = 'Selec Cap', command = lambda: func.deseleccionar_tots(lista_ig))
 
-bEsborra.pack(side = TOP, anchor = W)				
-bHLink.pack(side = TOP, anchor = W)				
-bSLink.pack(side = TOP, anchor = W)				
-bSelecTotsA.pack(side = TOP, anchor = W)				
-bSelecCapA.pack(side = TOP, anchor = W)
+bEsborra.pack(side = TOP, fill = X)				
+bHLink.pack(side = TOP, fill = X)				
+bSLink.pack(side = TOP, fill = X)				
+bSelecTotsA.pack(side = TOP, fill = X)				
+bSelecCapA.pack(side = TOP, fill = X)
 fIgualScroll.pack(side = LEFT)
-fFitxIgualButton.pack(side = LEFT)
+fFitxIgualButton.pack(side = LEFT, expand = TRUE, fill = X)
 fIguals.pack(side = TOP, expand = TRUE, fill = X)
 
 #GUI's frame for Semblants
@@ -126,14 +126,14 @@ bEsborra = Button(fFitxSemblButton, text = 'Esborra', command = lambda: func.esb
 bSelecTotsB = Button(fFitxSemblButton, text = 'Selec Tots', command = lambda: func.seleccionar_tots(lista_semb))
 bSelecCapB = Button(fFitxSemblButton, text = 'Selec Cap', command = lambda: func.deseleccionar_tots(lista_semb))
 
-bCompara.pack(side = TOP, anchor = W)
-bRenombra.pack(side = TOP, anchor = W)
-bEsborra.pack(side = TOP, anchor = W)
-bSelecTotsB.pack(side = TOP, anchor = W)
-bSelecCapB.pack(side = TOP, anchor = W)
+bEsborra.pack(side = TOP, fill = X)
+bCompara.pack(side = TOP, fill = X)
+bRenombra.pack(side = TOP, fill = X)
+bSelecTotsB.pack(side = TOP, fill = X)
+bSelecCapB.pack(side = TOP, fill = X)
 			
 fSemblScroll.pack(side = LEFT)
-fFitxSemblButton.pack(side = LEFT)
+fFitxSemblButton.pack(side = LEFT, expand = TRUE, fill = X)
 fSembl.pack(side = TOP, expand = TRUE, fill = X)
 
 #Pack frames
