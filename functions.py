@@ -23,7 +23,7 @@ def dirName(name_dir):
 	try:
 		name_dir.set(os.path.abspath(askdirectory(title='Escoja un directorio', mustexist=1)))
 	except AttributeError, e:
-
+		pass
 #Function 
 def omplirDicc(fit_font):
 	for path, dirs, files in os.walk(dir_NameDst.get()):
