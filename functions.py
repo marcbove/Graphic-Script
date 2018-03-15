@@ -20,7 +20,9 @@ dicc_fitx_ig = {}
 dicc_fitx_semb = {}
 
 def dirName(name_dir):
-	name_dir.set(os.path.abspath(askdirectory()))
+	try:
+		name_dir.set(os.path.abspath(askdirectory(title='Escoja un directorio', mustexist=1)))
+	except AttributeError, e:
 
 #Function 
 def omplirDicc(fit_font):
