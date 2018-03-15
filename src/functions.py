@@ -52,7 +52,7 @@ def dicIgual():
 		llenarListas(lista_semb, dicc_fitx_semb)
 
 	except OSError, e:
-		tkMessageBox.showerror("Error", "Introduzca directorios")
+		tkMessageBox.showerror("Error", "Introduzca directorios!")
 
 #Funcio que omple segons una Listbox i un diccionari una de les ListBox
 def llenarListas(lista, diccionario):
@@ -63,14 +63,14 @@ def llenarListas(lista, diccionario):
 #Funció que selecciona tots els fitxers de la llista passada per paràmetre
 def seleccionar_tots(lista):
 	if not lista.get(0,END):
-		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista!")
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista. Lista vacia!")
 	else:
 		lista.selection_set(0, END)
 		
 #Funció que deselecciona tots els fitxers de la llista passada per paràmetre
 def deseleccionar_tots(lista):
 	if not lista.get(0,END):
-		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista!")
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista. Lista vacia!")
 	else:
 		lista.selection_clear(0, END)
 
@@ -106,7 +106,9 @@ def listas_semb_ig(lista, diccionari_fitxer):
 #Esborra de les estructures 
 def link(type):
 	if not lista_ig.get(0,END):
-		tkMessageBox.showwarning("Warning", "No hay ficheros iguales, la lista está vacía")
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista. Lista vacia!")
+	elif lista_ig.curselection() == ():
+		tkMessageBox.showinfo("Information", "Selecciona alguno de los ficheros de la lista")
 	else: 
 		lista_ig_x_dest, lista_ig_x_src = listas_semb_ig(lista_ig, dicc_fitx_ig)
 		esborra(lista_ig, dicc_fitx_ig)
@@ -124,7 +126,9 @@ def link(type):
 #Esborra els fitxers seleccionats dels directoris, llistes i diccionaris
 def esborra(lista, diccionari):
 	if not lista.get(0,END):
-		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista")
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista. Lista vacia!")
+	elif lista.curselection() == ():
+		tkMessageBox.showinfo("Information", "Selecciona alguno de los ficheros de la lista")
 	else:
 		#Obtenim les llistes amb tots els elements seleccionats (paths) de desti i font 
 		lista_x_act_dest, lista_x_act_src = listas_semb_ig(lista, diccionari)
@@ -143,7 +147,9 @@ def esborra(lista, diccionari):
 #Esborra de la ListBox de fitxers semblants els fitxers als quals se'ls ha canviat el nom
 def renombra():
 	if not lista_semb.get(0,END):
-		tkMessageBox.showwarning("Warning", "No hay ficheros parecidos, la lista está vacía")
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista. Lista vacia!")
+	elif lista_semb.curselection() == ():
+		tkMessageBox.showinfo("Information", "Selecciona alguno de los ficheros de la lista")
 	else: 
 		for a in lista_semb.curselection():
 			b=lista_semb.get(a)
@@ -155,7 +161,9 @@ def renombra():
 #Función crea GUI compara
 def compara_graf():
 	if not lista_semb.get(0,END):
-		tkMessageBox.showwarning("Warning", "No hay ficheros parecidos")
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista. Lista vacia!")
+	elif lista_semb.curselection() == ():
+		tkMessageBox.showinfo("Information", "Selecciona alguno de los ficheros de la lista")
 	else:
 		ventanacomparacion = Toplevel()
 		ventanacomparacion.minsize(500,200)
