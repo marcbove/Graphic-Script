@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from Tkinter import *
+from tkSimpleDialog import *
 from tkFileDialog import *
 import tkMessageBox 
 import os, sys
@@ -153,8 +154,13 @@ def renombra():
 	else: 
 		for a in lista_semb.curselection():
 			b=lista_semb.get(a)
-			b=b.replace('~', dir_NameDst.get())
-			os.rename(b, b.replace('.txt','(copia).txt'))
+			copia = askstring('Input', 'Escull el prefix de la copia:')
+			if copia is not None:
+				print copia
+			else:
+				print 'buuuuuuuuuuuuuuuh'
+			os.rename(b.replace('~', dir_NameDst.get()), b.replace(os.path.basename(b), copia+os.path.basename(b)))
+
 		for elem_tupla in lista_semb.curselection()[::-1]:	
 			lista_semb.delete(elem_tupla)
 
