@@ -155,15 +155,24 @@ def renombra():
 		for a in lista_semb.curselection():
 			b=lista_semb.get(a)
 			copia = askstring('Input', 'Escull el prefix de la copia:')
-			if copia is not None:
-				print copia
+
+			if copia is None:
+				tkMessageBox.showinfo("Information", "Ha cancelado el renombramiento")
+
 			else:
-				print 'buuuuuuuuuuuuuuuh'
-			os.rename(b.replace('~', dir_NameDst.get()), b.replace(os.path.basename(b), copia+os.path.basename(b)))
+				
+				b = b.replace('~', dir_NameDst.get())
+				c = b.replace(os.path.basename(b), copia+os.path.basename(b))
 
-		for elem_tupla in lista_semb.curselection()[::-1]:	
-			lista_semb.delete(elem_tupla)
+				os.rename(b, c)
+				for key, value in dicc_fitx_semb.iteritems():
+					if b in value:
+						dicc_fitx_semb[key].remove(b)
 
+		if copia is not None:
+			for elem_tupla in lista_semb.curselection()[::-1]:	
+					lista_semb.delete(elem_tupla)
+			
 #Función crea GUI compara
 def compara_graf():
 	if not lista_semb.get(0,END):
