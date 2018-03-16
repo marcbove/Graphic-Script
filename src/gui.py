@@ -3,11 +3,7 @@
 
 from Tkinter import *
 from tkFileDialog import *
-import tkMessageBox 
-import os, sys
 from collections import defaultdict
-import filecmp
-import subprocess
 import functions as func
 
 #Create window
@@ -41,8 +37,8 @@ scrolOriginal.config(command = lista_or.yview)
 
 #GUI's second-to-last: selecciona tots/cap
 fSelecciona = Frame(window)
-bTots = Button(fSelecciona, text = 'Selecciona Tots', command = lambda: func.seleccionar_tots(lista_or))
-bCap = Button(fSelecciona, text = 'Selecciona Cap', command = lambda: func.deseleccionar_tots(lista_or))
+bTots = Button(fSelecciona, text = 'Selecciona Tots', command = lambda: func.seleccionar_tots_or(lista_or))
+bCap = Button(fSelecciona, text = 'Selecciona Cap', command = lambda: func.deseleccionar_tots_or(lista_or))
 
 #GUI's Second Line: ask destination directory and search
 fDirectDest = Frame(window)
@@ -152,5 +148,8 @@ func.dicc_fitx_semb = dicc_fitx_semb
 func.lista_ig = lista_ig
 func.lista_semb = lista_semb
 func.lista_or = lista_or
+
+lista_or.bind('<<ListboxSelect>>', func.onselect)
+
 
 window.mainloop()

@@ -3,12 +3,11 @@
 
 from Tkinter import *
 from tkSimpleDialog import *
-from tkFileDialog import *
+from tkFileDialog import askdirectory
 import tkMessageBox 
-import os, sys
-from collections import defaultdict
+import os
+#from collections import defaultdict
 import filecmp
-import subprocess
 
 dir_NameDst = ''
 dir_NameSrc = ''
@@ -34,13 +33,16 @@ def omplirDicc(fit_font):
 				for fi in fit_font:
 					b = fi.replace(' ', '')
 					if b == a and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+(f), shallow=False) and dir_NameSrc.get()!=path and path!='/home/milax/.local/share/Trash/files' and not os.path.islink(path+'/'+f):
-						dicc_fitx_ig[fi].append(path+'/'+f)
+						if path+'/'+f not in dicc_fitx_ig[fi]:
+							dicc_fitx_ig[fi].append(path+'/'+f)
 					elif b == a and dir_NameSrc.get()!=path and not os.path.islink(path+'/'+f):
-						dicc_fitx_semb[fi].append(path+'/'+f)
+						if path+'/'+f not in dicc_fitx_semb[fi]:
+							dicc_fitx_semb[fi].append(path+'/'+f)
 
 #Cerca de fitxers semblants
 def dicIgual():
 	try:
+		vaciarListas(lista_or)
 		fit_font = filter(lambda x: x.endswith('.txt'), os.listdir(dir_NameSrc.get()))
 		asd = os.listdir(dir_NameDst.get())
 		omplirDicc(fit_font)
@@ -48,27 +50,64 @@ def dicIgual():
 
 		for var in fit_or:
 			lista_or.insert(END, var)
-		
-		llenarListas(lista_ig, dicc_fitx_ig)
-		llenarListas(lista_semb, dicc_fitx_semb)
 
 	except OSError, e:
 		tkMessageBox.showerror("Error", "Introduzca directorios!")
 
 #Funcio que omple segons una Listbox i un diccionari una de les ListBox
 def llenarListas(lista, diccionario):
+	lista.delete(0,END)
 	for key, val in diccionario.iteritems():
 			for i in val:
 				lista.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get()))
 
 #Funció que selecciona tots els fitxers de la llista passada per paràmetre
+def seleccionar_tots_or(lista):
+	if not lista.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista. Lista vacia!")
+	else:
+		if lista.size()!=len(lista.curselection()):
+			lista.selection_set(0, END)
+			llenarListas(lista_ig, dicc_fitx_ig)
+			llenarListas(lista_semb, dicc_fitx_semb)
+		
 def seleccionar_tots(lista):
 	if not lista.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista. Lista vacia!")
 	else:
-		lista.selection_set(0, END)
+		if lista.size()!=len(lista.curselection()):
+			lista.selection_set(0, END)
+
+def onselect(evt):
+	click = evt.widget
+	if click.get(0,END):
+		lista_ig.delete(0,END)
+		lista_semb.delete(0,END)	
+		for elem in click.curselection():
+			for key, value in dicc_fitx_semb.iteritems():
+				if key==click.get(elem):
+					for i in value:
+						lista_semb.insert(END, i.replace(dir_NameDst.get(), '~')) #Hay que poner solo el relpath
+			for key, value in dicc_fitx_ig.iteritems():
+				if key==click.get(elem):
+					for i in value:
+						lista_ig.insert(END, i.replace(dir_NameDst.get(), '~'))	#Hay que poner solo el relpath
 		
+
+				
+def vaciarListas(lista):
+	if lista.get(0,END):
+		lista.delete(0, END)
+
 #Funció que deselecciona tots els fitxers de la llista passada per paràmetre
+def deseleccionar_tots_or(lista):
+	if not lista.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista. Lista vacia!")
+	else:
+		lista.selection_clear(0, END)
+		vaciarListas(lista_ig)
+		vaciarListas(lista_semb)
+
 def deseleccionar_tots(lista):
 	if not lista.get(0,END):
 		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista. Lista vacia!")
