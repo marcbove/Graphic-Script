@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from Tkinter import *
-from tkSimpleDialog import *
+from tkSimpleDialog import askstring
 from tkFileDialog import askdirectory
 import tkMessageBox, os, filecmp
 
@@ -190,7 +190,7 @@ def renombra():
 	else: 
 		for a in lista_semb.curselection():
 			b=lista_semb.get(a)
-			copia = askstring('Input', 'Escull el prefix de la copia:')
+			copia = tkSimpleDialog.askstring('Input', 'Escull el prefix de la copia:')
 
 			if copia is None:
 				tkMessageBox.showinfo("Information", "Ha cancelado el renombramiento")
