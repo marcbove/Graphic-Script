@@ -122,7 +122,10 @@ def llena_Listas(lista_inode, lista_path, lista_num):
 	for i in range(0, len(lista_num_dest)):
 		with open(lista_num_dest[i], 'r') as dest:
 			dest_array = dest.read().split('\n')
-		with open(lista_num_src[i], 'r') as src:
+		for elem in lista_or.get(0,END):
+			if elem.replace(' ', '')==os.path.basename(lista_num_dest[i]).replace(' ', ''):
+				fitx_or = dir_NameSrc.get()+'/'+elem
+		with open(fitx_or , 'r') as src:
 			src_array = src.read().split('\n')				
 		lista_num.insert(END,len(filter(lambda x: x not in src_array, dest_array)))
 				
