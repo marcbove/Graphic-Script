@@ -4,10 +4,7 @@
 from Tkinter import *
 from tkSimpleDialog import *
 from tkFileDialog import askdirectory
-import tkMessageBox 
-import os
-#from collections import defaultdict
-import filecmp
+import tkMessageBox, os, filecmp
 
 dir_NameDst = ''
 dir_NameSrc = ''
