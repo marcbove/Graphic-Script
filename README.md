@@ -45,5 +45,5 @@ Llenguatges utilitzats: Shell-scripts, programació de l’intèrpret de comande
 de programació Python i la seva extensió TkInter per a crear scripts gràfics.
 
 Subject: FSO (Foundations of Operating Systems)
-
+ 
 Authors: Gwen Mege & Marc Bové
