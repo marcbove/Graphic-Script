@@ -7,7 +7,7 @@ diferències en el contingut.
 A continuació es mostra una captura de la interfície gràfica implementada juntament amb una
 breu descripció de les funcionalitats implementades:
 
-![Exemple de la inferfície gràfica](https://)
+![Exemple de la inferfície gràfica](https://github.com/marcbove/graphic-sript/blob/master/gui.PNG)
 
 - *Escollir directori font*: Permet escollir el directori font per iniciar la comparació,
 només mirarem els fitxers que estan directament sota aquest directori.
