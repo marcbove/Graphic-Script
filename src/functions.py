@@ -29,12 +29,13 @@ def omplirDicc(fit_font):
 				a = f.replace(' ', '')
 				for fi in fit_font:
 					b = fi.replace(' ', '')
-					if b == a and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+(f), shallow=False) and dir_NameSrc.get()!=path and path!='/home/milax/.local/share/Trash/files' and not os.path.islink(path+'/'+f):
+					if b == a and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+(f), shallow=False) and dir_NameSrc.get()!=path and (path.find("/home/milax/.local/share/Trash/files/") == -1) and not os.path.islink(path+'/'+f):
 						if path+'/'+f not in dicc_fitx_ig[fi]:
-							dicc_fitx_ig[fi].append(path+'/'+f)
-					elif b == a and dir_NameSrc.get()!=path and not os.path.islink(path+'/'+f):
+							dicc_fitx_ig[fi].append(os.path.abspath(path+'/'+f))
+
+					elif b == a and dir_NameSrc.get()!=path and not os.path.islink(path+'/'+f) and (path.find("/home/milax/.local/share/Trash/files/") == -1):
 						if path+'/'+f not in dicc_fitx_semb[fi]:
-							dicc_fitx_semb[fi].append(path+'/'+f)
+							dicc_fitx_semb[fi].append(os.path.abspath(path+'/'+f))
 
 #Cerca de fitxers semblants
 def dicIgual():
@@ -135,7 +136,7 @@ def listas_semb_ig(lista, diccionari_fitxer):
 	lista_x_act_src = []
 	for key, value in diccionari_fitxer.iteritems():
 		for i in range(0, len(lista_x_act_dest)):
-			elem_x = dir_NameDst.get()+lista_x_act_dest[i].replace('~', '')
+			elem_x = os.path.abspath(dir_NameDst.get()+lista_x_act_dest[i].replace('~', ''))
 			if elem_x in value:
 				lista_x_act_src.append(key)
 				lista_x_act_dest[i]=elem_x
@@ -193,7 +194,7 @@ def renombra():
 	else: 
 		for a in lista_semb.curselection():
 			b=lista_semb.get(a)
-			copia = tkSimpleDialog.askstring('Input', 'Escull el prefix de la copia:')
+			copia = askstring('Input', 'Escull el prefix de la copia:')
 
 			if copia is None:
 				tkMessageBox.showinfo("Information", "Ha cancelado el renombramiento")
@@ -276,4 +277,4 @@ def compara_graf():
 def sortir(window):
 	if  tkMessageBox.askquestion('Sortir', "Segur que voleu sortir de l'aplicació?", icon= 'warning') == 'yes':
 		window.quit()
-		os.system('./src/destruccio_fitxers.sh')
+		os.system('./destruccio_fitxers.sh')

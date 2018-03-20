@@ -10,7 +10,7 @@ import functions as func
 window=Tk()
 window.title("Cerca fitxers Redundants")
 window.minsize(500,450)
-#window.maxsize(500,450)
+window.maxsize(99999,450)
 
 #Variables
 dir_NameDst = StringVar()
@@ -80,7 +80,7 @@ lista_ig = Listbox(fIgualScroll, yscrollcommand = scrollIguals.set, selectmode =
 scrollIguals.config(command = lista_ig.yview)
 
 scrollIguals.pack(side = LEFT, fill = Y)
-lista_ig.pack(side = RIGHT, expand = TRUE, fill = X)
+lista_ig.pack(side = RIGHT, expand = TRUE, fill = BOTH)
 
 #Iguals' Buttons
 fFitxIgualButton = Frame(fIguals)
@@ -95,9 +95,9 @@ bHLink.pack(side = TOP, fill = X)
 bSLink.pack(side = TOP, fill = X)				
 bSelecTotsA.pack(side = TOP, fill = X)				
 bSelecCapA.pack(side = TOP, fill = X)
-fIgualScroll.pack(side = LEFT)
-fFitxIgualButton.pack(side = LEFT, expand = TRUE, fill = X)
-fIguals.pack(side = TOP, expand = TRUE, fill = X)
+fIgualScroll.pack(side = LEFT, expand = TRUE, fill = BOTH)
+fFitxIgualButton.pack(side = LEFT)
+fIguals.pack(side = TOP, expand = TRUE, fill = BOTH)
 
 #GUI's frame for Semblants
 fSembl = Frame(fIgualSembl)
@@ -112,7 +112,7 @@ lista_semb = Listbox(fSemblScroll, yscrollcommand = scrollSembl.set, selectmode 
 scrollSembl.config(command = lista_semb.yview)
 
 scrollSembl.pack(side = LEFT, fill = Y)
-lista_semb.pack(side = RIGHT, expand = TRUE, fill = X)
+lista_semb.pack(side = RIGHT, expand = TRUE, fill = BOTH)
 			
 #GUI's buttons for 'Fitxers Semblants'
 fFitxSemblButton = Frame(fSembl)
@@ -128,9 +128,9 @@ bRenombra.pack(side = TOP, fill = X)
 bSelecTotsB.pack(side = TOP, fill = X)
 bSelecCapB.pack(side = TOP, fill = X)
 			
-fSemblScroll.pack(side = LEFT)
-fFitxSemblButton.pack(side = LEFT, expand = TRUE, fill = X)
-fSembl.pack(side = TOP, expand = TRUE, fill = X)
+fSemblScroll.pack(side = LEFT, expand = TRUE, fill = BOTH)
+fFitxSemblButton.pack(side = LEFT)
+fSembl.pack(side = TOP, expand = TRUE, fill = BOTH)
 
 #Pack frames
 fDirectFont.pack(side = TOP, expand = TRUE, fill = X)
@@ -138,8 +138,8 @@ fDirectDest.pack(side = TOP, expand = TRUE, fill = X)
 fSortir.pack(side = BOTTOM, expand = TRUE, fill = X)
 fSelecciona.pack(side = BOTTOM, expand = TRUE, fill = X)
 fOriginals.pack(side = LEFT, expand = TRUE, fill = BOTH)
-fIgualSembl.pack(side = LEFT, expand = TRUE, fill = X)
-fFitxers.pack(side = LEFT, expand = TRUE, fill = X)
+fIgualSembl.pack(side = LEFT, expand = TRUE, fill = BOTH)
+fFitxers.pack(side = LEFT, expand = TRUE, fill = BOTH)
 
 func.dir_NameDst = dir_NameDst
 func.dir_NameSrc = dir_NameSrc
