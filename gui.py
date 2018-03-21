@@ -149,7 +149,7 @@ func.lista_ig = lista_ig
 func.lista_semb = lista_semb
 func.lista_or = lista_or
 
-lista_or.bind('<<ListboxSelect>>', func.onselect)
+#lista_or.bind('<<ListboxSelect>>', func.onselect)
 
 
 window.mainloop()

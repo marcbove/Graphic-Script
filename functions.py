@@ -58,6 +58,8 @@ def dicIgual():
 
 		for var in fit_or:
 			lista_or.insert(END, var)
+		llenarListas(lista_ig, dicc_fitx_ig)
+		llenarListas(lista_semb, dicc_fitx_semb)
 
 	except OSError, e:
 		tkMessageBox.showerror("Error", "Introduzca directorios!")
