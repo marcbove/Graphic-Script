@@ -67,7 +67,7 @@ def llenarListas(lista, diccionario):
 	lista.delete(0,END)
 	for key, val in diccionario.iteritems():
 			for i in val:
-				lista.insert(END, i)
+				lista.insert(END, os.path.relpath(i))
 
 #Funció que selecciona tots els fitxers de la llista passada per paràmetre
 def seleccionar_tots_or(lista):
@@ -95,11 +95,11 @@ def onselect(evt):
 			for key, value in dicc_fitx_semb.iteritems():
 				if key==click.get(elem):
 					for i in value:
-						lista_semb.insert(END, i.replace(dir_NameDst.get(), '~')) #Hay que poner solo el relpath
+						lista_semb.insert(END, os.path.relpath(i)) #Hay que poner solo el relpath
 			for key, value in dicc_fitx_ig.iteritems():
 				if key==click.get(elem):
 					for i in value:
-						lista_ig.insert(END, i.replace(dir_NameDst.get(), '~'))	#Hay que poner solo el relpath
+						lista_ig.insert(END, os.path.relpath(i))	#Hay que poner solo el relpath
 		
 
 				
