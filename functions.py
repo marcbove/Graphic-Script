@@ -67,7 +67,7 @@ def llenarListas(lista, diccionario):
 	lista.delete(0,END)
 	for key, val in diccionario.iteritems():
 			for i in val:
-				lista.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get()))
+				lista.insert(END, i)
 
 #Funció que selecciona tots els fitxers de la llista passada per paràmetre
 def seleccionar_tots_or(lista):
@@ -128,7 +128,7 @@ def llena_Listas(lista_inode, lista_path, lista_num):
 		lista_inode.insert(END, os.stat(os.path.abspath(lista_semb.get(val).replace('~/', ''))).st_ino) 
 		lista_path.insert(END, lista_semb.get(val).replace('~/', ''))
 			
-	lista_num_dest, lista_num_src = listas_semb_ig(lista_semb, dicc_fitx_semb)
+	lista_num_dest=[lista_semb.get(i) for i in lista_semb.curselection()]
 
 	for i in range(0, len(lista_num_dest)):
 		with open(lista_num_dest[i], 'r') as dest:
@@ -139,19 +139,6 @@ def llena_Listas(lista_inode, lista_path, lista_num):
 		with open(fitx_or , 'r') as src:
 			src_array = src.read().split('\n')				
 		lista_num.insert(END,len(filter(lambda x: x not in src_array, dest_array)))
-				
-#listas para pasar por parametros 
-def listas_semb_ig(lista, diccionari_fitxer):
-	lista_x_act_dest = [lista.get(i) for i in lista.curselection()]
-	lista_x_act_src = []
-	for key, value in diccionari_fitxer.iteritems():
-		for i in range(0, len(lista_x_act_dest)):
-			elem_x = os.path.abspath(dir_NameDst.get()+lista_x_act_dest[i].replace('~', ''))
-			if elem_x in value:
-				lista_x_act_src.append(key)
-				lista_x_act_dest[i]=elem_x
-
-	return lista_x_act_dest, lista_x_act_src
 
 #Funció que linka segons el tipus que es passa per paràmetre
 #Esborra de les estructures 
@@ -161,14 +148,14 @@ def link(type):
 	elif lista_ig.curselection() == ():
 		tkMessageBox.showinfo("Information", "Selecciona alguno de los ficheros de la lista")
 	else: 
-		lista_ig_x_dest, lista_ig_x_src = listas_semb_ig(lista_ig, dicc_fitx_ig)
+		lista_ig_x_dest= [lista_ig.get(i) for i in lista_ig.curselection()]
 		esborra(lista_ig, dicc_fitx_ig)
 		for i in range (0, len(lista_ig_x_dest)):
 			if type == 'soft':
-				os.symlink(dir_NameSrc.get()+'/'+lista_ig_x_src[i],lista_ig_x_dest[i])
+				os.symlink(dir_NameSrc.get()+'/'+os.path.basename(lista_ig_x_dest[i]),lista_ig_x_dest[i])
 				
 			elif type == 'hard':
-				os.link(dir_NameSrc.get()+'/'+lista_ig_x_src[i],lista_ig_x_dest[i])
+				os.link(dir_NameSrc.get()+'/'+os.path.basename(lista_ig_x_dest[i]),lista_ig_x_dest[i])
 			
 			else:
 				print 'Tipo no correcto'
@@ -182,9 +169,9 @@ def esborra(lista, diccionari):
 		tkMessageBox.showinfo("Information", "Selecciona alguno de los ficheros de la lista")
 	else:
 		#Obtenim les llistes amb tots els elements seleccionats (paths) de desti i font 
-		lista_x_act_dest, lista_x_act_src = listas_semb_ig(lista, diccionari)
+		#lista_x_act_dest, lista_x_act_src = listas_semb_ig(lista, diccionari)
 		#Per cada fitxer que esta activat en la llista es canvia el path pel complet, s'esborren els de desti de les carpetes, les listes i diccionaris
-		for fitxer in lista_x_act_dest:
+		for fitxer in [lista_ig.get(i) for i in lista_ig.curselection()]:
 			fitxer=os.path.abspath(fitxer.replace('~',''))
 			os.remove(fitxer)
 			for key, value in diccionari.iteritems():
