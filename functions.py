@@ -89,8 +89,8 @@ def seleccionar_tots(lista):
 def onselect(evt):
 	click = evt.widget
 	if click.get(0,END):
-		lista_ig.delete(0,END)
-		lista_semb.delete(0,END)	
+		#lista_ig.delete(0,END)
+		#lista_semb.delete(0,END)	
 		for elem in click.curselection():
 			for key, value in dicc_fitx_semb.iteritems():
 				if key==click.get(elem):
@@ -171,7 +171,7 @@ def esborra(lista, diccionari):
 		#Obtenim les llistes amb tots els elements seleccionats (paths) de desti i font 
 		#lista_x_act_dest, lista_x_act_src = listas_semb_ig(lista, diccionari)
 		#Per cada fitxer que esta activat en la llista es canvia el path pel complet, s'esborren els de desti de les carpetes, les listes i diccionaris
-		for fitxer in [lista_ig.get(i) for i in lista_ig.curselection()]:
+		for fitxer in [lista.get(i) for i in lista.curselection()]:
 			fitxer=os.path.abspath(fitxer.replace('~',''))
 			os.remove(fitxer)
 			for key, value in diccionari.iteritems():
