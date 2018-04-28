@@ -36,7 +36,8 @@ def omplirDicc(fit_font):
 						and not os.path.islink(path+'/'+f)
 						and path+'/'+f not in dicc_fitx_ig[fi]
 					):
-					dicc_fitx_ig[fi].append(os.path.abspath(path+'/'+f))
+					dicc_fitx_ig[fi].append(os.path.relpath(path+'/'+f, dir_NameDst.get()))
+
 
 				elif (
 						b == a 
@@ -45,7 +46,8 @@ def omplirDicc(fit_font):
 						and (path.find("/home/milax/.local/share/Trash/files") == -1)
 						and path+'/'+f not in dicc_fitx_semb[fi]
 					):
-					dicc_fitx_semb[fi].append(os.path.abspath(path+'/'+f))
+					dicc_fitx_semb[fi].append(os.path.relpath(path+'/'+f, dir_NameDst.get()))
+	print dicc_fitx_semb
 
 #Cerca de fitxers semblants
 def dicIgual():
@@ -90,7 +92,8 @@ def onselect(evt):
 	click = evt.widget
 	if click.get(0,END):
 		#lista_ig.delete(0,END)
-		#lista_semb.delete(0,END)	
+		#lista_semb.delete(0,END)
+		
 		for elem in click.curselection():
 			for key, value in dicc_fitx_semb.iteritems():
 				if key==click.get(elem):
@@ -100,7 +103,9 @@ def onselect(evt):
 				if key==click.get(elem):
 					for i in value:
 						lista_ig.insert(END, os.path.relpath(i))	#Hay que poner solo el relpath
-		
+		for elem in range(0, lista_ig.size()):
+			
+
 
 				
 def vaciarListas(lista):
