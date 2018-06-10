@@ -29,11 +29,11 @@ def omplirDicc(fit_font):
 				a = f.replace(' ', '')
 				for fi in fit_font:
 					b = fi.replace(' ', '')
-					if b == a and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+(f), shallow=False) and dir_NameSrc.get()!=path and (path.find("/home/milax/.local/share/Trash/files/") == -1) and not os.path.islink(path+'/'+f):
+					if b == a and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+(f), shallow=False) and dir_NameSrc.get()!=path and (path.find("/.local/share/Trash/files/") == -1) and not os.path.islink(path+'/'+f):
 						if path+'/'+f not in dicc_fitx_ig[fi]:
 							dicc_fitx_ig[fi].append(os.path.relpath(path+'/'+f))
 
-					elif b == a and dir_NameSrc.get()!=path and not os.path.islink(path+'/'+f) and (path.find("/home/milax/.local/share/Trash/files/") == -1):
+					elif b == a and dir_NameSrc.get()!=path and not os.path.islink(path+'/'+f) and (path.find("/.local/share/Trash/files/") == -1):
 						if path+'/'+f not in dicc_fitx_semb[fi]:
 							dicc_fitx_semb[fi].append(os.path.abspath(path+'/'+f))
 
@@ -314,4 +314,4 @@ def compara_graf():
 def sortir(window):
 	if  tkMessageBox.askquestion('Sortir', "Segur que voleu sortir de l'aplicació?", icon= 'warning') == 'yes':
 		window.quit()
-		os.system('./destruccio_fitxers.sh')
+		os.system('./src/destruccio_fitxers.sh')

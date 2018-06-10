@@ -9,8 +9,8 @@ import functions as func
 #Create window
 window=Tk()
 window.title("Cerca fitxers Redundants")
-window.minsize(500,450)
-window.maxsize(99999,450)
+window.minsize(500,500)
+window.maxsize(999,500)
 
 #Variables
 dir_NameDst = StringVar()
@@ -51,10 +51,14 @@ bDirectDest.pack(side = LEFT)
 lDirectDest.pack(side = LEFT, expand = TRUE, fill = X)
 bCerca.pack(side = LEFT)
 
+fOrdenar = Frame(window)
+bOrdenar = Button(fOrdenar, text = 'Ordenar', command = lambda: func.sortir(window))
+
 #GUI's last line: exit button
 fSortir = Frame(window)
 bSortir = Button(fSortir, text = 'Sortir', command = lambda: func.sortir(window))
 
+bOrdenar.pack(side = LEFT)
 bSortir.pack(side = LEFT)
 
 bTots.pack(side = LEFT)
@@ -136,6 +140,7 @@ fSembl.pack(side = TOP, expand = TRUE, fill = BOTH)
 fDirectFont.pack(side = TOP, expand = TRUE, fill = X)
 fDirectDest.pack(side = TOP, expand = TRUE, fill = X)
 fSortir.pack(side = BOTTOM, expand = TRUE, fill = X)
+fOrdenar.pack(side = BOTTOM, expand = TRUE, fill = X)
 fSelecciona.pack(side = BOTTOM, expand = TRUE, fill = X)
 fOriginals.pack(side = LEFT, expand = TRUE, fill = BOTH)
 fIgualSembl.pack(side = LEFT, expand = TRUE, fill = BOTH)
