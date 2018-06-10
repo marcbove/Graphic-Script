@@ -52,7 +52,7 @@ lDirectDest.pack(side = LEFT, expand = TRUE, fill = X)
 bCerca.pack(side = LEFT)
 
 fOrdenar = Frame(window)
-bOrdenar = Button(fOrdenar, text = 'Ordenar', command = lambda: func.sortir(window))
+bOrdenar = Button(fOrdenar, text = 'Ordenar', command = lambda: func.ordenar(lista_or, lista_ig, lista_semb))
 
 #GUI's last line: exit button
 fSortir = Frame(window)

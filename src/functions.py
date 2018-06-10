@@ -15,6 +15,7 @@ lista_x_act_dest = []
 lista_or = []
 dicc_fitx_ig = {}
 dicc_fitx_semb = {}
+ascending = False
 
 def dirName(name_dir):
 	try:
@@ -249,7 +250,27 @@ def renombra():
 		if copia is not None:
 			for elem_tupla in lista_semb.curselection()[::-1]:	
 					lista_semb.delete(elem_tupla)
-			
+
+def ordenar(lista_or, lista_ig, lista_semb):
+	global ascending
+	if not lista_or.get(0,END):
+		tkMessageBox.showwarning("Warning", "No hay ficheros en la lista. Lista vacia!")
+	else:
+		ordenar_lista(lista_or, ascending)
+		ordenar_lista(lista_ig, ascending)
+		ordenar_lista(lista_semb, ascending)
+		ascending = not ascending
+
+def ordenar_lista(lista, asc):
+	temp_list = list(lista.get(0, END))
+	if (asc):
+		temp_list.sort(key = str.lower, reverse = True)
+	else:
+		temp_list.sort(key = str.lower)
+	lista.delete(0, END)
+	for item in temp_list:
+		lista.insert(END, item)
+
 #Función crea GUI compara
 def compara_graf():
 	if not lista_semb.get(0,END):
