@@ -31,7 +31,7 @@ def omplirDicc(fit_font):
 					b = fi.replace(' ', '')
 					if b == a and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+(f), shallow=False) and dir_NameSrc.get()!=path and (path.find("/home/milax/.local/share/Trash/files/") == -1) and not os.path.islink(path+'/'+f):
 						if path+'/'+f not in dicc_fitx_ig[fi]:
-							dicc_fitx_ig[fi].append(os.path.abspath(path+'/'+f))
+							dicc_fitx_ig[fi].append(os.path.relpath(path+'/'+f))
 
 					elif b == a and dir_NameSrc.get()!=path and not os.path.islink(path+'/'+f) and (path.find("/home/milax/.local/share/Trash/files/") == -1):
 						if path+'/'+f not in dicc_fitx_semb[fi]:
@@ -78,20 +78,57 @@ def seleccionar_tots(lista):
 
 def onselect(evt):
 	click = evt.widget
+	lista = []
+	lista2 = []
+	lista3 = []
 	if click.get(0,END):
-		lista_ig.delete(0,END)
-		lista_semb.delete(0,END)	
-		for elem in click.curselection():
-			for key, value in dicc_fitx_semb.iteritems():
-				if key==click.get(elem):
-					for i in value:
-						lista_semb.insert(END, i.replace(dir_NameDst.get(), '~')) #Hay que poner solo el relpath
-			for key, value in dicc_fitx_ig.iteritems():
-				if key==click.get(elem):
-					for i in value:
-						lista_ig.insert(END, i.replace(dir_NameDst.get(), '~'))	#Hay que poner solo el relpath
 		
+		for i in range (0, lista_ig.size()):
+			lista.append(lista_ig.get(i))
+		for i in range (0, lista_semb.size()):
+			lista2.append(lista_semb.get(i))		
 
+		for elem in click.curselection():
+			lista3.append(click.get(elem))
+		for elem in click.curselection():
+				for key, value in dicc_fitx_semb.iteritems():
+					if key in lista3:
+						if key==click.get(elem):
+							for i in value:
+								c = i.replace(dir_NameDst.get(), '~')
+								if c not in lista2:
+									lista_semb.insert(END, c) #Hay que poner solo el relpath
+									lista2.append(c)
+					if key not in lista3:
+						for i in value:
+							c=i.replace(dir_NameDst.get(), '~')
+							for a in range(0, lista_semb.size()):
+								if c==lista_semb.get(-a):
+									lista_semb.delete(-a)
+									lista2.remove(c)
+
+				for key, value in dicc_fitx_ig.iteritems():
+					if key in lista3:
+						if key==click.get(elem):
+							for i in value:
+								c=i.replace(dir_NameDst.get(), '~')
+								if c not in lista:
+									lista_ig.insert(END, c)	#Hay que poner solo el relpath
+									lista.append(c)
+		
+					if key not in lista3:
+						for i in value:
+							c=i.replace(dir_NameDst.get(), '~')
+							for a in range(0, lista_ig.size()):
+								if c==lista_ig.get(-a):
+									lista_ig.delete(-a)
+									lista.remove(c)
+
+	if len(click.curselection()) == 0:
+		lista_ig.delete(0,END)
+		lista_semb.delete(0,END)
+
+		
 				
 def vaciarListas(lista):
 	if lista.get(0,END):
