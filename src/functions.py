@@ -58,7 +58,7 @@ def llenarListas(lista, diccionario):
 	lista.delete(0,END)
 	for key, val in diccionario.iteritems():
 			for i in val:
-				lista.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get()))
+				lista.insert(END, os.path.relpath(i, dir_NameSrc.get()))
 
 #Funció que selecciona tots els fitxers de la llista passada per paràmetre
 def seleccionar_tots_or(lista):
@@ -125,9 +125,9 @@ def onselect(evt):
 									lista_ig.delete(-a)
 									lista.remove(c)
 
-	if len(click.curselection()) == 0:
-		lista_ig.delete(0,END)
-		lista_semb.delete(0,END)
+	#if len(click.curselection()) == 0:
+		#lista_ig.delete(0,END)
+		#lista_semb.delete(0,END)
 
 		
 				

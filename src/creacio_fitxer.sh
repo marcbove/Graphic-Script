@@ -5,11 +5,9 @@ if [ $# -ne 1 ]; then
 	exit 1
 fi
 cd ..
-mkdir -p Carp1/Carp1_1 Carp2 Carp3/Carp3_{1,2}
+mkdir -p Carp1/Carp1_1 Carp2 Carp3/Carp3_{1,2} Carp4/Carp4_1 Carp5/Carp5_{1,2}
 echo -e "\nDirectoris creats!\nFitxers i directoris:"
 ls
-#mkdir -p Carp2
-#mkdir -p Carp3/Carp31
 A="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
 \nlabore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
 \nnisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
@@ -28,13 +26,104 @@ C="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo
 \nmagni dolores eos qui ratione voluptatem sequi nesciunt. Duis aute irure dolor in reprehenderit in voluptate velit
 \nesse cillum dolore eu fugiat nulla pariatur. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
 \nnihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-echo -e $A > "lorem.txt"
+cd Carp4
 echo -e $B > "ipsum.txt"
-cd Carp1/
+echo -e $B > "lorem.txt"
+cd Carp4_1
+echo -e $B > "ipsum.txt"
+echo -e $C > "lorem.txt"
+echo -e $B > "i psum.txt"
+echo -e $C > "remsum.txt"
+cd ..
+cd ..
+cd Carp5
+echo -e $B > "remsum.txt"
+echo -e $A > "ipsum.txt"
+cd Carp5_1
+echo -e $B > "ipsum.txt"
+echo -e $B > "remsum.txt"
+echo -e $B > "lorem.txt"
+echo -e $A > "ipsum.txt"
+echo -e $C > "lorem.txt"
+echo -e $B > "ipsum.txt"
+cd ..
+cd Carp5_2
 echo -e $A > "lorem.txt"
 echo -e $C > "ipsum.txt"
+echo -e $A > "ipsum.txt"
+echo -e $B > "i psum.txt"
+cd ..
+cd ..
+echo -e $A > "lorem.txt"
+echo -e $B > "ipsum.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll10.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll11.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll12.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll13.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll14.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll15.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll16.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll17.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll18.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll19.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll20.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll21.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll22.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll23.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll24.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll25.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll26.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll27.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll28.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll29.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll30.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll31.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll32.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll33.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll34.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll35.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll36.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll37.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll38.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll39.txt"
+cd Carp1/
+#echo -e $A > "lorem.txt"
+#echo -e $C > "ipsum.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll10.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll11.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll12.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll13.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll14.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll15.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll16.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll17.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll18.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll19.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll20.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll21.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll22.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll23.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll24.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll25.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll26.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll27.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll28.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll29.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll30.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll31.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll32.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll33.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll34.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll35.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll36.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll37.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll38.txt"
+#echo -e "Provar que l'scrollbar va be" > "prova_scroll39.txt"
 cd Carp1_1/
 echo -e $B > "ipsum.txt"
+echo -e $B > "ipsum.txt"
+echo -e $B > "lorem.txt"
+echo -e $B > "i psum.txt"
 echo -e $B > "remsum.txt"
 cd ..
 cd ..
@@ -53,6 +142,9 @@ echo -e $C > "remsum.txt"
 cd ..
 cd Carp3_2/
 echo -e $A > "lorem.txt"
+echo -e $C > "remsum.txt"
+echo -e $A > "ipsum.txt"
+echo -e $C > "remsum.txt"
 cd ..
 cd ..
 echo -e "\nFitxers Creats!\n"
