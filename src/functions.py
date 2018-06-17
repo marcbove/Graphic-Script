@@ -230,15 +230,14 @@ def renombra():
 	elif lista_semb.curselection() == ():
 		tkMessageBox.showinfo("Information", "Selecciona alguno de los ficheros de la lista")
 	else: 
+		copia = askstring('Input', 'Escull el prefix de la copia:')
 		for a in lista_semb.curselection():
-			b=lista_semb.get(a)
-			copia = askstring('Input', 'Escull el prefix de la copia:')
+			b = lista_semb.get(a)
 
 			if copia is None:
 				tkMessageBox.showinfo("Information", "Ha cancelado el renombramiento")
-
 			else:
-				
+
 				b = b.replace('~', dir_NameDst.get())
 				c = b.replace(os.path.basename(b), copia+os.path.basename(b))
 
