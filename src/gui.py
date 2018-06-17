@@ -16,6 +16,7 @@ window.maxsize(999,500)
 dir_NameDst = StringVar()
 dir_NameSrc = StringVar()
 dicc_fitx_ig = defaultdict(list)
+dicc_fitx_ig_abs = defaultdict(list)
 dicc_fitx_semb = defaultdict(list)
 
 fDirectFont = Frame(window)
@@ -88,7 +89,7 @@ lista_ig.pack(side = RIGHT, expand = TRUE, fill = BOTH)
 
 #Iguals' Buttons
 fFitxIgualButton = Frame(fIguals)
-bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = lambda: func.esborra(lista_ig, dicc_fitx_ig))
+bEsborra = Button(fFitxIgualButton, text = 'Esborra', command = lambda: func.esborra(lista_ig, dicc_fitx_ig_abs))
 bHLink = Button(fFitxIgualButton, text = 'Hard Link', command = lambda: func.link('hard'))
 bSLink = Button(fFitxIgualButton, text = 'Soft Link', command = lambda: func.link('soft'))
 bSelecTotsA = Button(fFitxIgualButton, text = 'Selec Tots', command = lambda: func.seleccionar_tots(lista_ig))
@@ -149,6 +150,7 @@ fFitxers.pack(side = LEFT, expand = TRUE, fill = BOTH)
 func.dir_NameDst = dir_NameDst
 func.dir_NameSrc = dir_NameSrc
 func.dicc_fitx_ig = dicc_fitx_ig
+func.dicc_fitx_ig_abs = dicc_fitx_ig_abs
 func.dicc_fitx_semb = dicc_fitx_semb
 func.lista_ig = lista_ig
 func.lista_semb = lista_semb

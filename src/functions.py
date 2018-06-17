@@ -14,6 +14,7 @@ lista_x_act_src = []
 lista_x_act_dest = []
 lista_or = []
 dicc_fitx_ig = {}
+dicc_fitx_ig_abs = {}
 dicc_fitx_semb = {}
 ascending = False
 
@@ -33,6 +34,7 @@ def omplirDicc(fit_font):
 					if b == a and filecmp.cmp(dir_NameSrc.get()+'/'+fi, path+'/'+(f), shallow=False) and dir_NameSrc.get()!=path and (path.find("/.local/share/Trash/files/") == -1) and not os.path.islink(path+'/'+f):
 						if path+'/'+f not in dicc_fitx_ig[fi]:
 							dicc_fitx_ig[fi].append(os.path.relpath(path+'/'+f))
+							dicc_fitx_ig_abs[fi].append(os.path.abspath(path+'/'+f))
 
 					elif b == a and dir_NameSrc.get()!=path and not os.path.islink(path+'/'+f) and (path.find("/.local/share/Trash/files/") == -1):
 						if path+'/'+f not in dicc_fitx_semb[fi]:
@@ -70,7 +72,7 @@ def seleccionar_tots_or(lista):
 	else:
 		if lista.size()!=len(lista.curselection()):
 			lista.selection_set(0, END)
-			llenarListas(lista_ig, dicc_fitx_ig)
+			llenarListas(lista_ig, dicc_fitx_ig_abs)
 			llenarListas(lista_semb, dicc_fitx_semb)
 		
 def seleccionar_tots(lista):
