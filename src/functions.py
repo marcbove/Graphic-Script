@@ -61,7 +61,7 @@ def llenarListas(lista, diccionario):
 	lista.delete(0,END)
 	for key, val in diccionario.iteritems():
 			for i in val:
-				lista.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get()))
+				lista.insert(END, '~/'+os.path.relpath(i, dir_NameDst.get()))
 
 #Funció que selecciona tots els fitxers de la llista passada per paràmetre
 def seleccionar_tots_or(lista):
@@ -71,8 +71,6 @@ def seleccionar_tots_or(lista):
 		if lista.size()!=len(lista.curselection()):
 			lista.selection_set(0, END)
 			llenarListas(lista_ig, dicc_fitx_ig)
-			print dicc_fitx_ig
-			print dicc_fitx_semb
 			llenarListas(lista_semb, dicc_fitx_semb)
 		
 def seleccionar_tots(lista):
@@ -93,16 +91,16 @@ def onselect():
 
 	for f in selected:
 		for val in dicc_fitx_ig[f]:
-			file = '~/{}'.format(os.path.relpath(val, dir_NameSrc.get()))
+			file = '~/{}'.format(os.path.relpath(val, dir_NameDst.get()))
 			if file not in l_ig:
 				l_ig.append(file)
 				lista_ig.insert(END, file)
 
 		for val in dicc_fitx_semb[f]:
-			file = '~/{}'.format(os.path.relpath(val, dir_NameSrc.get()))
+			file = '~/{}'.format(os.path.relpath(val, dir_NameDst.get()))
 			if file not in l_semb:
-				l_semb.append('~/'+os.path.relpath(val, dir_NameSrc.get()))
-				lista_semb.insert(END, '~/'+os.path.relpath(val, dir_NameSrc.get()))
+				l_semb.append('~/'+os.path.relpath(val, dir_NameDst.get()))
+				lista_semb.insert(END, '~/'+os.path.relpath(val, dir_NameDst.get()))
 
 def vaciarListas(lista):
 	if lista.get(0,END):
@@ -165,14 +163,14 @@ def link(type):
 		lista_ig_x_dest, lista_ig_x_src = listas_semb_ig(lista_ig, dicc_fitx_ig)
 		esborra(lista_ig, dicc_fitx_ig)
 		for i in range (0, len(lista_ig_x_dest)):
+			file_dst = '{}{}'.format(dir_NameDst.get(), lista_ig_x_dest[i].replace('~', ''))
+			file_src = '{}/{}'.format(dir_NameSrc.get(), os.path.basename(file_dst).replace(' ', ''))
+			print file_dst
+			print file_src
 			if type == 'soft':
-				os.symlink(dir_NameSrc.get()+'/'+lista_ig_x_src[i],lista_ig_x_dest[i])
-				
-			elif type == 'hard':
-				os.link(dir_NameSrc.get()+'/'+lista_ig_x_src[i],lista_ig_x_dest[i])
-			
+				os.symlink(file_src, file_dst)
 			else:
-				print 'Tipo no correcto'
+				os.link(file_src, file_dst)
 
 
 #Esborra els fitxers seleccionats dels directoris, llistes i diccionaris

@@ -29,6 +29,7 @@ C="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo
 cd Carp4
 echo -e $B > "ipsum.txt"
 echo -e $B > "lorem.txt"
+echo -e $C > "remsum.txt"
 cd Carp4_1
 echo -e $B > "ipsum.txt"
 echo -e $C > "lorem.txt"
