@@ -50,6 +50,9 @@ def dicIgual():
 		for var in fit_or:
 			lista_or.insert(END, var)
 
+		llenarListas(lista_ig, dicc_fitx_ig)
+		llenarListas(lista_semb, dicc_fitx_semb)
+
 	except OSError, e:
 		tkMessageBox.showerror("Error", "Introduzca directorios!")
 
@@ -68,6 +71,8 @@ def seleccionar_tots_or(lista):
 		if lista.size()!=len(lista.curselection()):
 			lista.selection_set(0, END)
 			llenarListas(lista_ig, dicc_fitx_ig)
+			print dicc_fitx_ig
+			print dicc_fitx_semb
 			llenarListas(lista_semb, dicc_fitx_semb)
 		
 def seleccionar_tots(lista):
