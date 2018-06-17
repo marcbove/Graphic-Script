@@ -58,7 +58,7 @@ def llenarListas(lista, diccionario):
 	lista.delete(0,END)
 	for key, val in diccionario.iteritems():
 			for i in val:
-				lista.insert(END, os.path.relpath(i, dir_NameSrc.get()))
+				lista.insert(END, '~/'+os.path.relpath(i, dir_NameSrc.get()))
 
 #Funció que selecciona tots els fitxers de la llista passada per paràmetre
 def seleccionar_tots_or(lista):

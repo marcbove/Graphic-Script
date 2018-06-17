@@ -9,7 +9,7 @@ rm -r -f Carp4
 rm -r -f Carp5
 rm -f ipsum.txt
 rm -f lorem.txt
-#rm -f "prova_scroll*"
+#rm -f prova_scroll*
 echo -e "\nDirectoris esborrats!\n\nFitxers i directoris:"
 ls
 echo ""
