@@ -53,7 +53,7 @@ def dicIgual():
 	except OSError, e:
 		tkMessageBox.showerror("Error", "Introduzca directorios!")
 
-#Funcio que omple segons una Listbox i un diccionari una de les ListBox
+#Funcio que omple segons una Listbox i un diccionari d'una de les ListBoxs
 def llenarListas(lista, diccionario):
 	lista.delete(0,END)
 	for key, val in diccionario.iteritems():
@@ -77,60 +77,28 @@ def seleccionar_tots(lista):
 		if lista.size()!=len(lista.curselection()):
 			lista.selection_set(0, END)
 
-def onselect(evt):
-	click = evt.widget
-	lista = []
-	lista2 = []
-	lista3 = []
-	if click.get(0,END):
-		
-		for i in range (0, lista_ig.size()):
-			lista.append(lista_ig.get(i))
-		for i in range (0, lista_semb.size()):
-			lista2.append(lista_semb.get(i))		
+def onselect():
+	
+	l_ig = []
+	l_semb = []
+	vaciarListas(lista_ig)
+	vaciarListas(lista_semb)	
 
-		for elem in click.curselection():
-			lista3.append(click.get(elem))
-		for elem in click.curselection():
-				for key, value in dicc_fitx_semb.iteritems():
-					if key in lista3:
-						if key==click.get(elem):
-							for i in value:
-								c = i.replace(dir_NameDst.get(), '~')
-								if c not in lista2:
-									lista_semb.insert(END, c) #Hay que poner solo el relpath
-									lista2.append(c)
-					if key not in lista3:
-						for i in value:
-							c=i.replace(dir_NameDst.get(), '~')
-							for a in range(0, lista_semb.size()):
-								if c==lista_semb.get(-a):
-									lista_semb.delete(-a)
-									lista2.remove(c)
+	selected = [lista_or.get(i) for i in lista_or.curselection()]
 
-				for key, value in dicc_fitx_ig.iteritems():
-					if key in lista3:
-						if key==click.get(elem):
-							for i in value:
-								c=i.replace(dir_NameDst.get(), '~')
-								if c not in lista:
-									lista_ig.insert(END, c)	#Hay que poner solo el relpath
-									lista.append(c)
-		
-					if key not in lista3:
-						for i in value:
-							c=i.replace(dir_NameDst.get(), '~')
-							for a in range(0, lista_ig.size()):
-								if c==lista_ig.get(-a):
-									lista_ig.delete(-a)
-									lista.remove(c)
+	for f in selected:
+		for val in dicc_fitx_ig[f]:
+			file = '~/{}'.format(os.path.relpath(val, dir_NameSrc.get()))
+			if file not in l_ig:
+				l_ig.append(file)
+				lista_ig.insert(END, file)
 
-	#if len(click.curselection()) == 0:
-		#lista_ig.delete(0,END)
-		#lista_semb.delete(0,END)
+		for val in dicc_fitx_semb[f]:
+			file = '~/{}'.format(os.path.relpath(val, dir_NameSrc.get()))
+			if file not in l_semb:
+				l_semb.append('~/'+os.path.relpath(val, dir_NameSrc.get()))
+				lista_semb.insert(END, '~/'+os.path.relpath(val, dir_NameSrc.get()))
 
-		
-				
 def vaciarListas(lista):
 	if lista.get(0,END):
 		lista.delete(0, END)
@@ -151,7 +119,7 @@ def deseleccionar_tots(lista):
 		lista.selection_clear(0, END)
 
 #Funció que omple les llistes necessàries per la GUI de compara
-def llena_Listas(lista_inode, lista_path, lista_num):
+def llena_Listas_compara(lista_inode, lista_path, lista_num):
 	for val in lista_semb.curselection():
 		lista_inode.insert(END, os.stat(os.path.abspath(lista_semb.get(val).replace('~/', ''))).st_ino) 
 		lista_path.insert(END, lista_semb.get(val).replace('~/', ''))
@@ -329,7 +297,7 @@ def compara_graf():
 		fcomp.pack(side = LEFT, expand = TRUE, fill = BOTH)
 
 		#Omple les Listbox
-		llena_Listas(lista_inode, lista_path, lista_num)
+		llena_Listas_compara(lista_inode, lista_path, lista_num)
 
 def sortir(window):
 	if  tkMessageBox.askquestion('Sortir', "Segur que voleu sortir de l'aplicació?", icon= 'warning') == 'yes':
